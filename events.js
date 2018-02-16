@@ -302,8 +302,7 @@ function setMarker(title, header, content, location){
     });
     marker.addListener('click', function () {
         //marker.setOpacity(1);
-        $('#info').html(header + content);
-        $('#info').show();
+        $('#info').html(header + content).show();
         //infowindow.open(map, marker);
     });
 }
