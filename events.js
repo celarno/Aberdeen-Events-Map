@@ -327,7 +327,7 @@ var fb_events = function(page, callback){
             if (response.data) {
                 data = response.data;
                 callback(data.slice(0,5)); // just take first 5 events
-            } else { console.log("Error!"); }
+            } else { console.log("no events!"); }
         });
 };
 
@@ -355,7 +355,8 @@ function getDB(){
                         var date = data[i].start_time;
                         date = date.substring(0,10) + ' ' + date.substring(11,16);
                         var x = '$(\'#event_desc_' + i + '\').toggle()';
-                        var n  = '<div style="font-weight:bold" id="event_name_' + i + '" onclick="' + x + '">' + data[i].name + '</div>';
+                        var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
+                            '" onclick="' + x + '">' + data[i].name + '</div>';
                         var de = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
                         events.push([date, n, de]);
                         i++;
@@ -367,3 +368,8 @@ function getDB(){
         });
     });
 }
+
+$("event_names").hover(function() {
+    $(this).css("background-color","red");
+    console.log('test');
+});
