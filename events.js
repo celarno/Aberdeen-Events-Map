@@ -321,7 +321,7 @@ var fb_events = function(page, callback){
         function (response) {
             if (response.data) {
                 data = response.data;
-                callback(data);
+                callback(data.slice(0,5));
             } else { console.log("Error!"); }
         });
 };
@@ -343,8 +343,16 @@ function getDB(){
                 var scat = this.gsx$subcat.$t;
                 var website = "<a href=" + this.gsx$website.$t + " target=\"_blank\">" + this.gsx$website.$t + "</a>";
                 var header = "<h4>" + cat + " - " + scat + " </h4><h2>" + title + "</h2><p>" + website + "</p>";
+                var events = [];
                 fb_events(fb, function(data){
-                    var events = JSON.stringify(data[0]);
+                    var i = 0;
+                    $(data).each(function(){
+                        var date = data[i].start_time;
+                        //date = date.getDay + '/' + date.getMonth + '/' + date.getFullYear;
+                        events.push([date, data[i].name]);
+                        i++;
+                    });
+                    events = events.join('<br>');
                     setMarker(title, header, events, loc);
                 });
             }
