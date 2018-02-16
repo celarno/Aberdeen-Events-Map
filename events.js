@@ -354,7 +354,7 @@ function getDB(){
                     $(data).each(function(){
                         var date = data[i].start_time;
                         date = date.substring(0,10) + ' ' + date.substring(11,16);
-                        var x = '$(\'#event_desc_' + i + '\').show()';
+                        var x = '$(\'#event_desc_' + i + '\').toggle()';
                         var n  = '<div style="font-weight:bold" id="event_name_' + i + '" onclick="' + x + '">' + data[i].name + '</div>';
                         var de = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
                         events.push([date, n, de]);
