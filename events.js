@@ -294,12 +294,14 @@ function setMarker(title, header, content, location){
     var marker = new google.maps.Marker({
         position: marker1,
         title: title,
-        map: map
+        map: map,
+        opacity: 1
     });
     var infowindow = new google.maps.InfoWindow({
         content: header + content
     });
     marker.addListener('click', function () {
+        //marker.setOpacity(1);
         $('#info').html(header + content);
         $('#info').show();
         //infowindow.open(map, marker);
