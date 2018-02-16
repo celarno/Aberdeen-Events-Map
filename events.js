@@ -290,7 +290,8 @@ function setMarker(title, header, content, location){
     console.log('setting marker ...');
     lati = location.split(',')[0];
     long = location.split(',')[1];
-    var close = '<br><br><a href="#" onclick="$(\'#info\').hide();">close</a>';
+    var close = '<a href="#" style="color:white;padding:0 3px;background-color: #555;' +
+        'text-decoration:none;float:right;" onclick="$(\'#info\').hide();">X</a>';
     var marker1 = new google.maps.LatLng(lati, long);
     var marker = new google.maps.Marker({
         position: marker1,
@@ -303,7 +304,7 @@ function setMarker(title, header, content, location){
     });
     marker.addListener('click', function () {
         //marker.setOpacity(1);
-        $('#info').html(header + content + close).show();
+        $('#info').html(close + header + content).show();
         //infowindow.open(map, marker);
     });
 }
