@@ -18,10 +18,6 @@ html, body {
     overflow: auto !important;
 }
 
-.event_names {
-    font-weight: bold;
-}
-
 * {box-sizing: border-box;}
 
 .topnav {

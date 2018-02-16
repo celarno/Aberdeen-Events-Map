@@ -283,7 +283,7 @@ function initMap() {
                 }
             ]
     });
-    console.log('map loaded ...');
+    console.log('map loaded ... ');
 }
 
 function setMarker(title, header, content, location){
