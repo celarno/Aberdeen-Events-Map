@@ -300,7 +300,8 @@ function setMarker(title, header, content, location){
         content: header + content
     });
     marker.addListener('click', function () {
-        infowindow.open(map, marker);
+        $("#info").html(header + content);
+        //infowindow.open(map, marker);
     });
 }
 

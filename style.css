@@ -13,6 +13,20 @@ html, body {
     left: 0;
     z-index: 1;
 }
+
+#info {
+    height: 80%;
+    width: 25%;
+    position: fixed;
+    top: 15%;
+    left: 5%;
+    z-index: 2;
+    background-color: rgba(235, 235, 235, 0.65);
+    padding: 1em;
+    overflow: auto;
+}
+
+
 .gm-style-iw {
     max-width: 400px !important;
     overflow: auto !important;
