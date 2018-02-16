@@ -321,7 +321,7 @@ var fb_events = function(page, callback){
         function (response) {
             if (response.data) {
                 data = response.data;
-                callback(data.slice(0,5));
+                callback(data.slice(0,5)); // just take first 5 events
             } else { console.log("Error!"); }
         });
 };
@@ -342,14 +342,17 @@ function getDB(){
                 var cat = this.gsx$cat.$t;
                 var scat = this.gsx$subcat.$t;
                 var website = "<a href=" + this.gsx$website.$t + " target=\"_blank\">" + this.gsx$website.$t + "</a>";
-                var header = "<h4>" + cat + " - " + scat + " </h4><h2>" + title + "</h2><p>" + website + "</p>";
+                var header = "<h4>" + cat + " - " + scat + "</h4><h2>" + title + "</h2><p>" + website + "</p>";
                 var events = [];
                 fb_events(fb, function(data){
                     var i = 0;
                     $(data).each(function(){
                         var date = data[i].start_time;
-                        //date = date.getDay + '/' + date.getMonth + '/' + date.getFullYear;
-                        events.push([date, data[i].name]);
+                        date = date.substring(0,10) + ' ' + date.substring(11,16);
+                        var x = '$(\'#event_desc_' + i + '\').show()';
+                        var n  = '<div style="font-weight:bold" id="event_name_' + i + '" onclick="' + x + '">' + data[i].name + '</div>';
+                        var de = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
+                        events.push([date, n, de]);
                         i++;
                     });
                     events = events.join('<br>');

@@ -13,6 +13,14 @@ html, body {
     left: 0;
     z-index: 1;
 }
+.gm-style-iw {
+    max-width: 200px !important;
+    overflow: auto !important;
+}
+
+.event_names {
+    font-weight: bold;
+}
 
 * {box-sizing: border-box;}
 
