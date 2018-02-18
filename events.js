@@ -299,12 +299,14 @@ function setMarker(title, header, content, location){
         map: map,
         opacity: 1
     });
+    /*
     var infowindow = new google.maps.InfoWindow({
         content: header + content
     });
+    */
     marker.addListener('click', function () {
         //marker.setOpacity(1);
-        $('#info').html(close + header + content).show();
+        $("#info").html(close + header + content).show();
         //infowindow.open(map, marker);
     });
 }
@@ -358,7 +360,7 @@ function getDB(){
                         var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
                             '" onclick="' + x + '">' + data[i].name + '</div>';
                         var de = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
-                        events.push([date, n, de]);
+                        events.push([date, n, de].join(""));
                         i++;
                     });
                     events = events.join('<br>');
@@ -368,8 +370,3 @@ function getDB(){
         });
     });
 }
-
-$("event_names").hover(function() {
-    $(this).css("background-color","red");
-    console.log('test');
-});
