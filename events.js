@@ -339,7 +339,14 @@ function getData(cat){
 
     $.getJSON(url, function(data) {
         entries = data.feed.entry;
-        if (!(cat === "" || cat === "Aberdeen Events Map")) entries = $.grep(entries, function (n) {
+
+        entries = $.grep(entries, function(n) {
+            var x = n.gsx$location.$t;
+            var y = n.gsx$facebook.$t;
+            return x.length > 0 && y.length > 0;
+        });
+
+        if (!(cat === "" || cat === "all")) entries = $.grep(entries, function (n) {
             return n.gsx$cat.$t === cat;
         });
         fillMap(entries);
@@ -348,7 +355,6 @@ function getData(cat){
 
 function fillMap(e){
     $(e).each(function(){
-        if (this.gsx$location.$t && this.gsx$facebook.$t) {
             var t = new URL(this.gsx$facebook.$t).pathname;
             this.gsx$facebook.$t = t + 'events';
             var fb = this.gsx$facebook.$t;
@@ -374,16 +380,15 @@ function fillMap(e){
                 events = events.join('<br>');
                 setMarker(title, header, events, loc);
             });
-        }
     });
 }
 
 $(document).ready(function () {
     $(".topnav a").click(function() {
-        //alert($(this).text());
+        var id = $(this).attr('id');
         clearMarkers();
         markers = [];
-        getData($(this).text());
+        getData(id);
     });
 });
 
