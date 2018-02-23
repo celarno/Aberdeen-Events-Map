@@ -2,12 +2,13 @@ var lati, long;
 var map;
 var data;
 var events;
-var entry;
+var entries;
+var markers = [];
 
 function main(){
     fb_start();
     initMap();
-    getDB();
+    getData("");
 }
 
 function initMap() {
@@ -305,10 +306,10 @@ function setMarker(title, header, content, location){
     });
     */
     marker.addListener('click', function () {
-        //marker.setOpacity(1);
         $("#info").html(close + header + content).show();
         //infowindow.open(map, marker);
     });
+    markers.push(marker);
 }
 
 function fb_start() {
@@ -323,50 +324,80 @@ function fb_start() {
 
 var fb_events = function(page, callback){
     var token = '541885672846625|L29fSufvR0PLhEv2XI9DL76HdqM';
-    console.log('getting FB events data for ... ' + page);
     FB.api(page, 'GET', {access_token: token},
-        function (response) {
+        function(response) {
             if (response.data) {
                 data = response.data;
                 callback(data.slice(0,5)); // just take first 5 events
-            } else { console.log("no events!"); }
+            } else { console.log("no events! " + page); }
         });
 };
 
-function getDB(){
+function getData(cat){
     var spreadsheetID = "1laOX2_2aeSDz3H8lP7U8W_ohgeK39Ye1J3X-Q-_hsDU";
     var url = "https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json";
 
     $.getJSON(url, function(data) {
-        entry = data.feed.entry;
-        $(entry).each(function(){
-            if (this.gsx$location.$t) {
-                var t = new URL(this.gsx$facebook.$t).pathname;
-                this.gsx$facebook.$t = t + 'events';
-                var fb = this.gsx$facebook.$t;
-                var title = this.gsx$name.$t;
-                var loc = this.gsx$location.$t;
-                var cat = this.gsx$cat.$t;
-                var scat = this.gsx$subcat.$t;
-                var website = "<a href=" + this.gsx$website.$t + " target=\"_blank\">" + this.gsx$website.$t + "</a>";
-                var header = "<h4>" + cat + " - " + scat + "</h4><h2>" + title + "</h2><p>" + website + "</p>";
-                var events = [];
-                fb_events(fb, function(data){
-                    var i = 0;
-                    $(data).each(function(){
-                        var date = data[i].start_time;
-                        date = date.substring(0,10) + ' ' + date.substring(11,16);
-                        var x = '$(\'#event_desc_' + i + '\').toggle()';
-                        var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
-                            '" onclick="' + x + '">' + data[i].name + '</div>';
-                        var de = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
-                        events.push([date, n, de].join(""));
-                        i++;
-                    });
-                    events = events.join('<br>');
-                    setMarker(title, header, events, loc);
-                });
-            }
-        });
+        entries = data.feed.entry;
+        if (cat === "" || cat == "all") {
+            //entries = data.feed.entry;
+        } else {
+            entries = $.grep(entries, function(n) {
+                return n.gsx$cat.$t === cat;
+            });
+        }
+        fillMap(entries);
     });
+
+}
+
+function fillMap(e){
+    $(e).each(function(){
+        if (this.gsx$location.$t) {
+            var t = new URL(this.gsx$facebook.$t).pathname;
+            this.gsx$facebook.$t = t + 'events';
+            var fb = this.gsx$facebook.$t;
+            var title = this.gsx$name.$t;
+            var loc = this.gsx$location.$t;
+            var cat = this.gsx$cat.$t;
+            var scat = this.gsx$subcat.$t;
+            var website = "<a href=" + this.gsx$website.$t + " target=\"_blank\">" + this.gsx$website.$t + "</a>";
+            var header = "<h4>" + cat + " - " + scat + "</h4><h2>" + title + "</h2><p>" + website + "</p>";
+            var events = [];
+            fb_events(fb, function(data){
+                var i = 0;
+                $(data).each(function(){
+                    var date = data[i].start_time;
+                    date = date.substring(0,10) + ' ' + date.substring(11,16);
+                    var x = '$(\'#event_desc_' + i + '\').toggle()';
+                    var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
+                        '" onclick="' + x + '">' + data[i].name + '</div>';
+                    var de = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
+                    events.push([date, n, de].join(""));
+                    i++;
+                });
+                events = events.join('<br>');
+                setMarker(title, header, events, loc);
+            });
+        }
+    });
+}
+
+$(document).ready(function () {
+    $(".topnav a").click(function() {
+        //alert($(this).text());
+        clearMarkers();
+        markers = [];
+        getData($(this).text());
+    });
+});
+
+function clearMarkers() {
+    setMapOnAll(null);
+}
+
+function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
 }

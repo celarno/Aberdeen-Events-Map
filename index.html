@@ -3,6 +3,7 @@
 <head>
     <title>Aberdeen Events Map</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script src="events.js"></script>
     <meta name="viewport" content="initial-scale=1.0">
@@ -12,9 +13,13 @@
 <body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApTvTwhzrDL5KuyNJAukTGCkDE6hOudVI&callback=main" async defer></script>
 <div class="topnav">
-    <a class="active" href="#home">Aberdeen Events Map</a>
-    <a href="#cat">Categories</a>
-    <a href="#about">About</a>
+    <a class="active" href="#home" id="all">Aberdeen Events Map</a>
+    <a href='#' id='Entertainment'>Entertainment</a>
+    <a href='#' id='Dining'>Dining</a>
+    <a href='#' id='Accommodation'>Accommodation</a>
+    <a href='#' id='Sports'>Sports</a>
+    <a href='#' id='Culture'>Culture</a>
+    <a href='#' id='Professional'>Professional</a>
     <input type="text" placeholder="Search..">
 </div>
 <div id="map"></div>
