@@ -339,21 +339,16 @@ function getData(cat){
 
     $.getJSON(url, function(data) {
         entries = data.feed.entry;
-        if (cat === "" || cat == "all") {
-            //entries = data.feed.entry;
-        } else {
-            entries = $.grep(entries, function(n) {
-                return n.gsx$cat.$t === cat;
-            });
-        }
+        if (!(cat === "" || cat === "all")) entries = $.grep(entries, function (n) {
+            return n.gsx$cat.$t === cat;
+        });
         fillMap(entries);
     });
-
 }
 
 function fillMap(e){
     $(e).each(function(){
-        if (this.gsx$location.$t) {
+        if (this.gsx$location.$t && this.gsx$facebook.$t) {
             var t = new URL(this.gsx$facebook.$t).pathname;
             this.gsx$facebook.$t = t + 'events';
             var fb = this.gsx$facebook.$t;
