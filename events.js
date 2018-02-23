@@ -339,7 +339,7 @@ function getData(cat){
 
     $.getJSON(url, function(data) {
         entries = data.feed.entry;
-        if (!(cat === "" || cat === "all")) entries = $.grep(entries, function (n) {
+        if (!(cat === "" || cat === "Aberdeen Events Map")) entries = $.grep(entries, function (n) {
             return n.gsx$cat.$t === cat;
         });
         fillMap(entries);
