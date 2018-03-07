@@ -291,7 +291,7 @@ function setMarker(title, header, content, location){
     console.log('setting marker ...');
     lati = location.split(',')[0];
     long = location.split(',')[1];
-    var close = '<a href="#" style="color:white;padding:0 3px;background-color: #555;' +
+    var close = '<a href="#" style="color:white;padding:0 3px;background-color:#555;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();">X</a>';
     var marker1 = new google.maps.LatLng(lati, long);
     var marker = new google.maps.Marker({
@@ -355,31 +355,31 @@ function getData(cat){
 
 function fillMap(e){
     $(e).each(function(){
-            var t = new URL(this.gsx$facebook.$t).pathname;
-            this.gsx$facebook.$t = t + 'events';
-            var fb = this.gsx$facebook.$t;
-            var title = this.gsx$name.$t;
-            var loc = this.gsx$location.$t;
-            var cat = this.gsx$cat.$t;
-            var scat = this.gsx$subcat.$t;
-            var website = "<a href=" + this.gsx$website.$t + " target=\"_blank\">" + this.gsx$website.$t + "</a>";
-            var header = "<h4>" + cat + " - " + scat + "</h4><h2>" + title + "</h2><p>" + website + "</p>";
-            var events = [];
-            fb_events(fb, function(data){
-                var i = 0;
-                $(data).each(function(){
-                    var date = data[i].start_time;
-                    date = date.substring(0,10) + ' ' + date.substring(11,16);
-                    var x = '$(\'#event_desc_' + i + '\').toggle()';
-                    var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
-                        '" onclick="' + x + '">' + data[i].name + '</div>';
-                    var de = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
-                    events.push([date, n, de].join(""));
-                    i++;
-                });
-                events = events.join('<br>');
-                setMarker(title, header, events, loc);
-            });
+       var t = new URL(this.gsx$facebook.$t).pathname;
+       this.gsx$facebook.$t = t + 'events';
+       var fb = this.gsx$facebook.$t;
+       var title = this.gsx$name.$t;
+       var loc = this.gsx$location.$t;
+       var cat = this.gsx$cat.$t;
+       var scat = this.gsx$subcat.$t;
+       var website = "<a href=" + this.gsx$website.$t + " target=\"_blank\">" + this.gsx$website.$t + "</a>";
+       var header = "<h4>" + cat + " - " + scat + "</h4><h2>" + title + "</h2><p>" + website + "</p>";
+       var events = [];
+       fb_events(fb, function(data){
+           var i = 0;
+           $(data).each(function(){
+               var date = data[i].start_time;
+               date = date.substring(0,10) + ' ' + date.substring(11,16);
+               var x = '$(\'#event_desc_' + i + '\').toggle()';
+               var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
+                   '" onclick="' + x + '">' + data[i].name + '</div>';
+               var de = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
+               events.push([date, n, de].join(""));
+               i++;
+           });
+           events = events.join('<br>');
+           setMarker(title, header, events, loc);
+       });
     });
 }
 
@@ -401,3 +401,7 @@ function setMapOnAll(map) {
         markers[i].setMap(map);
     }
 }
+
+$(function() {
+    $(".box").draggable();
+});
