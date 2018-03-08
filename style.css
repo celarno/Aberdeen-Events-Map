@@ -99,6 +99,7 @@ html, body {
     box-shadow: 10px 10px 50px 0px rgba(0,0,0,0.75);
     border-radius: 10px;
     transition: background .2s;
+    overflow: auto;
 }
 
 @supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
