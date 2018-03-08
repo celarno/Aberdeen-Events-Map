@@ -86,13 +86,30 @@ html, body {
     height: 80%;
     width: 25%;
     position: absolute;
+    padding: 1em;
+    margin: 0;
     top: 15%;
     left: 5%;
-    z-index: 2;
+    z-index: 101;
     font-size: small;
-    padding: 1em;
-    overflow: auto;
     display: none;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    box-sizing: border-box;
+    -webkit-box-shadow: 10px 10px 50px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 50px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 50px 0px rgba(0,0,0,0.75);
+    border-radius: 10px;
+    transition: background .2s;
+}
+
+@supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+    #info {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+}
+
+@supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+    #info {
+        background: rgba(255,255,255,0.8);
+    }
 }

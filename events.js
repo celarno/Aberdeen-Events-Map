@@ -402,6 +402,3 @@ function setMapOnAll(map) {
     }
 }
 
-$(function() {
-    $(".box").draggable();
-});
