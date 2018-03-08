@@ -384,6 +384,7 @@ function fillMap(e){
 }
 
 $(document).ready(function () {
+
     $(".topnav a").click(function() {
         var id = $(this).attr('id');
         clearMarkers();
