@@ -3,12 +3,13 @@ var map;
 var data;
 var events;
 var entries;
+var marker;
 var markers = [];
 
 function main(){
     fb_start();
     initMap();
-    getData("");
+    getData();
 }
 
 function initMap() {
@@ -287,14 +288,17 @@ function initMap() {
     console.log('map loaded ... ');
 }
 
-function setMarker(title, header, content, location){
-    console.log('setting marker ...');
+function setMarker(title, cat, scat, website, events, location){
+    //console.log('setting marker ...');
+
+    var header = "<h4>" + cat + " - " + scat + "</h4><h2>" + title + "</h2><p>" + website + "</p>";
+
     lati = location.split(',')[0];
     long = location.split(',')[1];
     var close = '<a href="#" style="color:white;padding:0 3px;background-color:#555;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();">X</a>';
     var marker1 = new google.maps.LatLng(lati, long);
-    var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         position: marker1,
         title: title,
         map: map,
@@ -306,10 +310,13 @@ function setMarker(title, header, content, location){
     });
     */
     marker.addListener('click', function () {
-        $("#info").html(close + header + content).show();
+        $("#info").html(close + header + events.join('<br>')).show();
         //infowindow.open(map, marker);
     });
-    markers.push(marker);
+    //alert(events.toString());
+
+    var test = new createMarkers(cat,scat,marker,events);
+    markers.push(test);
 }
 
 function fb_start() {
@@ -333,7 +340,7 @@ var fb_events = function(page, callback){
         });
 };
 
-function getData(cat){
+function getData(){
     var spreadsheetID = "1laOX2_2aeSDz3H8lP7U8W_ohgeK39Ye1J3X-Q-_hsDU";
     var url = "https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json";
 
@@ -345,10 +352,8 @@ function getData(cat){
             var y = n.gsx$facebook.$t;
             return x.length > 0 && y.length > 0;
         });
+        entries.events = [];
 
-        if (!(cat === "" || cat === "all")) entries = $.grep(entries, function (n) {
-            return n.gsx$cat.$t === cat;
-        });
         fillMap(entries);
     });
 }
@@ -363,9 +368,9 @@ function fillMap(e){
        var cat = this.gsx$cat.$t;
        var scat = this.gsx$subcat.$t;
        var website = "<a href=" + this.gsx$website.$t + " target=\"_blank\">" + this.gsx$website.$t + "</a>";
-       var header = "<h4>" + cat + " - " + scat + "</h4><h2>" + title + "</h2><p>" + website + "</p>";
-       var events = [];
+
        fb_events(fb, function(data){
+           var events = [];
            var i = 0;
            $(data).each(function(){
                var date = data[i].start_time;
@@ -377,8 +382,8 @@ function fillMap(e){
                events.push([date, n, de].join(""));
                i++;
            });
-           events = events.join('<br>');
-           setMarker(title, header, events, loc);
+           //events = events.join('<br>');
+           setMarker(title, cat, scat, website, events, loc);
        });
     });
 }
@@ -387,19 +392,25 @@ $(document).ready(function () {
 
     $(".topnav a").click(function() {
         var id = $(this).attr('id');
-        clearMarkers();
-        markers = [];
-        getData(id);
+        filterMap(id);
     });
 });
 
-function clearMarkers() {
-    setMapOnAll(null);
-}
-
-function setMapOnAll(map) {
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
+function filterMap(id) {
+    for (var i = 0; i < entries.length; i++) {
+        if (markers[i].category === id || id === "all") {
+            markers[i].marker.setVisible(true);
+        } else {
+            //console.log(entries[i].gsx$cat.$t);
+            //console.log(i + " --- " + entries[i].events.toString());
+            markers[i].marker.setVisible(false);
+        }
     }
 }
 
+function createMarkers(category, subcategory, marker, events) {
+    this.category = category;
+    this.subcategory = subcategory;
+    this.marker = marker;
+    this.events = events;
+}

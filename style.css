@@ -92,11 +92,11 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 #info {
-    height: 92.75%;
+    height: 93%;
     min-width: 40%;
     max-width: 40%;
     position: absolute;
-    padding: 1em;
+    padding: 2em;
     margin: 0;
     bottom: 0;
     right: 0;
