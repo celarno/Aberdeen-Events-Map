@@ -9,6 +9,7 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApTvTwhzrDL5KuyNJAukTGCkDE6hOudVI&callback=main" async defer></script>
@@ -20,7 +21,7 @@
     <a href='#' id='Sports'>Sports</a>
     <a href='#' id='Culture'>Culture</a>
     <a href='#' id='Professional'>Professional</a>
-    <input type="text" id="search_box" onkeyup="mySearch()" placeholder="Search ...">
+    <div class="ui-widget"><input type="text" id="search_box" onkeyup="mySearch()" placeholder="Search ..."></div>
 </div>
 <div id="map"></div>
 <div id="info" class="box"></div>

@@ -5,6 +5,7 @@ var events;
 var entries;
 var marker;
 var markers = [];
+var availableTags = [];
 
 function main(){
     fb_start();
@@ -427,6 +428,15 @@ function event(date, time, name, desc){
 
 function mySearch(){
     var keyword = document.getElementById('search_box').value.toLowerCase();
+
+    $(markers).each(function(){
+        for (var j = 0; j < this.events.length; j++) {
+            var n = strip(this.events[j].name);
+            availableTags.push(n + " (" + this.marker.title + ")");
+        }
+    });
+    availableTags = availableTags.unique();
+
     for (var i = 0; i < markers.length; i++) {
         for (var j = 0; j < markers[i].events.length; j++) {
             var test = markers[i].marker.title + markers[i].events[j].name + markers[i].events[j].desc;
@@ -442,6 +452,22 @@ function mySearch(){
 
 
 
+$(function() {
+    $("#search_box").autocomplete({
+        source: availableTags
+    });
+});
+
+function strip(html)
+{
+    var tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+}
 
 
-
+Array.prototype.unique = function() {
+    return this.filter(function (value, index, self) {
+        return self.indexOf(value) === index;
+    });
+}
