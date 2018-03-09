@@ -322,6 +322,7 @@ function setMarker(title, cat, scat, website, events, location){
 
     var test = new createMarkers(cat,scat,marker,events);
     markers.push(test);
+
 }
 
 function fb_start() {
@@ -389,22 +390,28 @@ function fillMap(e){
                i++;
            });
            if(events.length >0){setMarker(title, cat, scat, website, events, loc);}
+           // create autocomplete tags
+
 
        });
     });
 }
 
 $(document).ready(function () {
+    $(".dropdown a").click(function() {
+        var id = $(this).text();
+        filterMap(id);
+    });
 
-    $(".topnav a").click(function() {
-        var id = $(this).attr('id');
+    $(".dropdown-menu li a").click(function() {
+        var id = $(this).text();
         filterMap(id);
     });
 });
 
 function filterMap(id) {
     for (var i = 0; i < markers.length; i++) {
-        if (markers[i].category === id || id === "all") {
+        if (markers[i].category === id || markers[i].subcategory === id || id === "all") {
             markers[i].marker.setVisible(true);
         } else {
             markers[i].marker.setVisible(false);
@@ -427,19 +434,13 @@ function event(date, time, name, desc){
 }
 
 function mySearch(){
+    $("#info").hide();
     var keyword = document.getElementById('search_box').value.toLowerCase();
-
-    $(markers).each(function(){
-        for (var j = 0; j < this.events.length; j++) {
-            var n = strip(this.events[j].name);
-            availableTags.push(n + " (" + this.marker.title + ")");
-        }
-    });
-    availableTags = availableTags.unique();
-
     for (var i = 0; i < markers.length; i++) {
+
         for (var j = 0; j < markers[i].events.length; j++) {
-            var test = markers[i].marker.title + markers[i].events[j].name + markers[i].events[j].desc;
+            availableTags.push(markers[i].marker.title);
+            var test = strip(markers[i].events[j].name) + strip(markers[i].events[j].desc) + markers[i].marker.title;
             test = test.toLowerCase();
             if(test.indexOf(keyword) !== -1 && test !== ""){
                 markers[i].marker.setVisible(true);
@@ -450,16 +451,13 @@ function mySearch(){
     }
 }
 
-
-
 $(function() {
     $("#search_box").autocomplete({
-        source: availableTags
+        source: availableTags.unique()
     });
 });
 
-function strip(html)
-{
+function strip(html) {
     var tmp = document.createElement("DIV");
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || "";

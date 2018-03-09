@@ -3,6 +3,7 @@
 <head>
     <title>Aberdeen Events Map</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script src="events.js"></script>
@@ -10,19 +11,111 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApTvTwhzrDL5KuyNJAukTGCkDE6hOudVI&callback=main" async defer></script>
-<div class="topnav">
-    <a href="#" id="all"><b>Aberdeen Events Map</b></a>
-    <a href='#' id='Entertainment'>Entertainment</a>
-    <a href='#' id='Dining'>Dining</a>
-    <a href='#' id='Accommodation'>Accommodation</a>
-    <a href='#' id='Sports'>Sports</a>
-    <a href='#' id='Culture'>Culture</a>
-    <a href='#' id='Professional'>Professional</a>
-    <div class="ui-widget"><input type="text" id="search_box" onkeyup="mySearch()" placeholder="Search ..."></div>
-</div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Aberdeen Events Map</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entertainment<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Music</a></li>
+                        <li><a href="#">Comedy</a></li>
+                        <li><a href="#">Cinema</a></li>
+                        <li><a href="#">Libraries</a></li>
+                        <li><a href="#">Kids and Family</a></li>
+                        <li><a href="#">Theme Parks</a></li>
+                        <li><a href="#">Nightlife</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dining<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Takeaway</a></li>
+                        <li><a href="#">Pubs</a></li>
+                        <li><a href="#">Cafe/ Coffee Shop</a></li>
+                        <li><a href="#">Indian</a></li>
+                        <li><a href="#">Chinese</a></li>
+                        <li><a href="#">Italian</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="active"></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Accommodation<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Hotels</a></li>
+                        <li><a href="#">B&B</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="active"></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sports<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Stadium</a></li>
+                        <li><a href="#">Sports Centre</a></li>
+                        <li><a href="#">Gyms</a></li>
+                        <li><a href="#">Swimming Pools</a></li>
+                        <li><a href="#">Running</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="active"></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Culture<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Art Galleries</a></li>
+                        <li><a href="#">Museums</a></li>
+                        <li><a href="#">Theatre</a></li>
+                        <li><a href="#">Faith</a></li>
+                        <li><a href="#">Sights</a></li>
+                        <li><a href="#">Castles</a></li>
+                    </ul>
+                </li>
+
+                <li class="active"></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Professional<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Banks</a></li>
+                        <li><a href="#">Universities</a></li>
+                        <li><a href="#">Solicitors</a></li>
+                        <li><a href="#">Schools</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="search_box" onkeyup="mySearch()" onchange="mySearch()"
+                           placeholder="Search ...">
+                </div>
+            </form>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 <div id="map"></div>
 <div id="info" class="box"></div>
 </body>
