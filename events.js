@@ -406,6 +406,8 @@ $(document).ready(function () {
     $(".dropdown-menu li a").click(function() {
         var id = $(this).text();
         filterMap(id);
+        $(this).closest(".dropdown-menu").prev().dropdown("toggle");
+        //console.log($(this).closest(".dropdown-menu").prev().attr("class"));
     });
 });
 

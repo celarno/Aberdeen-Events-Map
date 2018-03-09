@@ -33,6 +33,13 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 
 * {box-sizing: border-box;}
 
+.navi {
+    z-index: 30;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
 
 .dropdown a:hover {
     visibility: visible;
@@ -68,7 +75,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 @supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
-    #info, .navbar {
+    #info {
         background: rgba(255,255,255,0.6);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
@@ -76,7 +83,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 @supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
-    #info, .navbar {
+    #info {
         background: rgba(255,255,255,0.8);
     }
 }
