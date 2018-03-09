@@ -289,10 +289,9 @@ function initMap() {
 }
 
 function setMarker(title, cat, scat, website, events, location){
-    //console.log('setting marker ...');
+    console.log('setting marker ...');
 
     var header = "<h4>" + cat + " - " + scat + "</h4><h2>" + title + "</h2><p>" + website + "</p>";
-
     lati = location.split(',')[0];
     long = location.split(',')[1];
     var close = '<a href="#" style="color:white;padding:0 3px;background-color:#555;' +
@@ -388,7 +387,8 @@ function fillMap(e){
                events.push(test);
                i++;
            });
-           setMarker(title, cat, scat, website, events, loc);
+           if(events.length >0){setMarker(title, cat, scat, website, events, loc);}
+
        });
     });
 }
@@ -402,7 +402,7 @@ $(document).ready(function () {
 });
 
 function filterMap(id) {
-    for (var i = 0; i < entries.length; i++) {
+    for (var i = 0; i < markers.length; i++) {
         if (markers[i].category === id || id === "all") {
             markers[i].marker.setVisible(true);
         } else {
@@ -424,3 +424,24 @@ function event(date, time, name, desc){
     this.name = name;
     this.desc = desc;
 }
+
+function mySearch(){
+    var keyword = document.getElementById('search_box').value.toLowerCase();
+    for (var i = 0; i < markers.length; i++) {
+        for (var j = 0; j < markers[i].events.length; j++) {
+            var test = markers[i].marker.title + markers[i].events[j].name + markers[i].events[j].desc;
+            test = test.toLowerCase();
+            if(test.indexOf(keyword) !== -1 && test !== ""){
+                markers[i].marker.setVisible(true);
+            } else {
+                markers[i].marker.setVisible(false);
+            }
+        }
+    }
+}
+
+
+
+
+
+
