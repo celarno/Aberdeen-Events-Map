@@ -100,7 +100,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     margin: 0;
     bottom: 0;
     right: 0;
-    z-index: 201;
+    z-index: 20;
     font-size: small;
     display: none;
     box-sizing: border-box;

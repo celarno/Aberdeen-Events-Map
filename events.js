@@ -310,10 +310,15 @@ function setMarker(title, cat, scat, website, events, location){
     });
     */
     marker.addListener('click', function () {
-        $("#info").html(close + header + events.join('<br>')).show();
+        var e = [];
+        $(events).each(function() {
+            e.push([this.date + " - " + this.time,this.name,this.desc].join(""));
+        });
+        e = e.join('<br>');
+
+        $("#info").html(close + header + e).show();
         //infowindow.open(map, marker);
     });
-    //alert(events.toString());
 
     var test = new createMarkers(cat,scat,marker,events);
     markers.push(test);
@@ -346,13 +351,11 @@ function getData(){
 
     $.getJSON(url, function(data) {
         entries = data.feed.entry;
-
         entries = $.grep(entries, function(n) {
             var x = n.gsx$location.$t;
             var y = n.gsx$facebook.$t;
             return x.length > 0 && y.length > 0;
         });
-        entries.events = [];
 
         fillMap(entries);
     });
@@ -369,20 +372,22 @@ function fillMap(e){
        var scat = this.gsx$subcat.$t;
        var website = "<a href=" + this.gsx$website.$t + " target=\"_blank\">" + this.gsx$website.$t + "</a>";
 
-       fb_events(fb, function(data){
+       fb_events(fb, function(data) {
            var events = [];
            var i = 0;
            $(data).each(function(){
                var date = data[i].start_time;
-               date = date.substring(0,10) + ' ' + date.substring(11,16);
+               var time = date.substring(11,16);
+               date = date.substring(0,10);
                var x = '$(\'#event_desc_' + i + '\').toggle()';
-               var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
+               var name  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
                    '" onclick="' + x + '">' + data[i].name + '</div>';
-               var de = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
-               events.push([date, n, de].join(""));
+               var desc = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
+
+               var test = new event(date, time, name, desc);
+               events.push(test);
                i++;
            });
-           //events = events.join('<br>');
            setMarker(title, cat, scat, website, events, loc);
        });
     });
@@ -401,8 +406,6 @@ function filterMap(id) {
         if (markers[i].category === id || id === "all") {
             markers[i].marker.setVisible(true);
         } else {
-            //console.log(entries[i].gsx$cat.$t);
-            //console.log(i + " --- " + entries[i].events.toString());
             markers[i].marker.setVisible(false);
         }
     }
@@ -413,4 +416,11 @@ function createMarkers(category, subcategory, marker, events) {
     this.subcategory = subcategory;
     this.marker = marker;
     this.events = events;
+}
+
+function event(date, time, name, desc){
+    this.date = date;
+    this.time = time;
+    this.name = name;
+    this.desc = desc;
 }
