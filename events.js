@@ -463,18 +463,18 @@ function mySearch(){
     $("a.nav-link.dropdown-toggle").removeAttr("style");
 
     var keyword = document.getElementById('search_box').value.toLowerCase();
-
     for (var i = 0; i < markers.length; i++) {
-        for (var j = 0; j < markers[i].events.length; j++) {
-            var test = markers[i].events[j].n + markers[i].marker.title + markers[i].events[j].desc;
-            test = strip(test).toLowerCase();
-            test = test.replace(/[^\w\s]/gi, '');
+        $(markers[i].events).each(function(){
+            var test = this.n + markers[i].marker.title + this.desc;
+            test = strip(test).toLowerCase().replace(/[^\w\s]/gi, '').trim();
             if(test.indexOf(keyword) !== -1){
                 markers[i].marker.setVisible(true);
+                return false;
             } else {
                 markers[i].marker.setVisible(false);
+                return true;
             }
-        }
+        });
     }
 }
 
