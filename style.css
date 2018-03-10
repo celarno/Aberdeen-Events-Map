@@ -70,6 +70,10 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     overflow: auto;
 }
 
+.event_names:hover {
+    cursor: pointer;
+}
+
 @supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
     #info, .bg-light,.navbar {
         background: rgba(255,255,255,0.6) !important;
