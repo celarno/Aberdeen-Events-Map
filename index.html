@@ -3,7 +3,8 @@
 <head>
     <title>Aberdeen Events Map</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script src="events.js"></script>
@@ -11,112 +12,90 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApTvTwhzrDL5KuyNJAukTGCkDE6hOudVI&callback=main" async defer></script>
 <div class="navi">
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Aberdeen Events Map</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entertainment<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Music</a></li>
-                        <li><a href="#">Comedy</a></li>
-                        <li><a href="#">Cinema</a></li>
-                        <li><a href="#">Libraries</a></li>
-                        <li><a href="#">Kids and Family</a></li>
-                        <li><a href="#">Theme Parks</a></li>
-                        <li><a href="#">Nightlife</a></li>
-
-                    </ul>
+    <nav class="navbar navbar-expand-xl navbar-light" style="background: rgba(255,255,255,0.9);">
+        <a class="navbar-brand" href="#">Aberdeen Events Map</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Entertainment</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Music</a>
+                        <a class="dropdown-item" href="#">Comedy</a>
+                        <a class="dropdown-item" href="#">Cinema</a>
+                        <a class="dropdown-item" href="#">Libraries</a>
+                        <a class="dropdown-item" href="#">Kids and Family</a>
+                        <a class="dropdown-item" href="#">Theme Parks</a>
+                        <a class="dropdown-item" href="#">Nightlife</a>
+                    </div>
                 </li>
 
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dining<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Takeaway</a></li>
-                        <li><a href="#">Pubs</a></li>
-                        <li><a href="#">Cafe/ Coffee Shop</a></li>
-                        <li><a href="#">Indian</a></li>
-                        <li><a href="#">Chinese</a></li>
-                        <li><a href="#">Italian</a></li>
-
-                    </ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dining</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Takeaway</a>
+                        <a class="dropdown-item" href="#">Pubs</a>
+                        <a class="dropdown-item" href="#">Cafe/ Coffee Shop</a>
+                        <a class="dropdown-item" href="#">Indian</a>
+                        <a class="dropdown-item" href="#">Chinese</a>
+                        <a class="dropdown-item" href="#">Italian</a>
+                    </div>
                 </li>
 
-                <li class="active"></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Accommodation<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Hotels</a></li>
-                        <li><a href="#">B&B</a></li>
-
-                    </ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accommodation</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Hotels</a>
+                        <a class="dropdown-item" href="#">B&B</a>
+                    </div>
                 </li>
 
-                <li class="active"></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sports<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Stadium</a></li>
-                        <li><a href="#">Sports Centre</a></li>
-                        <li><a href="#">Gyms</a></li>
-                        <li><a href="#">Swimming Pools</a></li>
-                        <li><a href="#">Running</a></li>
-
-                    </ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sports</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Stadium</a>
+                        <a class="dropdown-item" href="#">Sports Centre</a>
+                        <a class="dropdown-item" href="#">Gyms</a>
+                        <a class="dropdown-item" href="#">Swimming Pools</a>
+                        <a class="dropdown-item" href="#">Running</a>
+                    </div>
                 </li>
 
-                <li class="active"></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Culture<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Art Galleries</a></li>
-                        <li><a href="#">Museums</a></li>
-                        <li><a href="#">Theatre</a></li>
-                        <li><a href="#">Faith</a></li>
-                        <li><a href="#">Sights</a></li>
-                        <li><a href="#">Castles</a></li>
-                    </ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Culture</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Art Galleries</a>
+                        <a class="dropdown-item" href="#">Museums</a>
+                        <a class="dropdown-item" href="#">Theatre</a>
+                        <a class="dropdown-item" href="#">Faith</a>
+                        <a class="dropdown-item" href="#">Sights</a>
+                        <a class="dropdown-item" href="#">Castles</a>
+                    </div>
                 </li>
 
-                <li class="active"></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Professional<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Banks</a></li>
-                        <li><a href="#">Universities</a></li>
-                        <li><a href="#">Solicitors</a></li>
-                        <li><a href="#">Schools</a></li>
-                    </ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Professional</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Banks</a>
+                        <a class="dropdown-item" href="#">Universities</a>
+                        <a class="dropdown-item" href="#">Solicitors</a>
+                        <a class="dropdown-item" href="#">Schools</a>
+                    </div>
                 </li>
             </ul>
-
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="search_box" onkeyup="mySearch()" onchange="mySearch()"
-                           placeholder="Search ...">
-                </div>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" id="search_box" onkeyup="mySearch()" placeholder="Search ..." aria-label="Search">
+                <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
             </form>
-
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+        </div>
+    </nav>
 </div>
 <div id="map"></div>
 <div id="info" class="box"></div>

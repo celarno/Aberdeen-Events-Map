@@ -15,7 +15,6 @@ html, body {
     z-index: 1;
 }
 
-
 .gm-style-iw {
     max-width: 400px !important;
     overflow: auto !important;
@@ -39,14 +38,13 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     top: 0;
     left: 0;
     width: 100%;
+
 }
 
-.dropdown a:hover {
-    visibility: visible;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: block;
+.navbar {
+    -webkit-box-shadow: 0px 33px 48px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px 33px 48px 0px rgba(0,0,0,0.15);
+    box-shadow: 0px 33px 48px 0px rgba(0,0,0,0.15);
 }
 
 .box:active{
@@ -55,9 +53,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 #info {
-    height: 93%;
-    min-width: 40%;
-    max-width: 40%;
+    width: 45%;
     position: absolute;
     padding: 2em;
     margin: 0;
@@ -75,15 +71,15 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 @supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
-    #info {
-        background: rgba(255,255,255,0.6);
+    #info, .bg-light,.navbar {
+        background: rgba(255,255,255,0.6) !important;
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
     }
 }
 
 @supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
-    #info {
-        background: rgba(255,255,255,0.8);
+    #info, .bg-light, .navbar {
+        background: rgba(255,255,255,0.9) !important;
     }
 }

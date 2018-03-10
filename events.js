@@ -292,10 +292,10 @@ function initMap() {
 function setMarker(title, cat, scat, website, events, location){
     console.log('setting marker ...');
 
-    var header = "<h4>" + cat + " - " + scat + "</h4><h2>" + title + "</h2><p>" + website + "</p>";
+    var header = "<h5>" + cat + " - " + scat + "</h5><h2>" + title + "</h2><p>" + website + "</p>";
     lati = location.split(',')[0];
     long = location.split(',')[1];
-    var close = '<a href="#" style="color:white;padding:0 3px;background-color:#555;' +
+    var close = '<a href="#" style="color:black;padding:0 3px;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();">X</a>';
     var marker1 = new google.maps.LatLng(lati, long);
     marker = new google.maps.Marker({
@@ -317,6 +317,14 @@ function setMarker(title, cat, scat, website, events, location){
         e = e.join('<br>');
 
         $("#info").html(close + header + e).show();
+        var h = $(document).height() - $(".navi").height();
+
+        $("#info").css("height", h);
+        var isMobile = window.matchMedia("only screen and (max-width: 768px)");
+        if (isMobile.matches) {
+            $("#info").css("width", "100%");
+        }
+
         //infowindow.open(map, marker);
     });
 
@@ -398,22 +406,34 @@ function fillMap(e){
 }
 
 $(document).ready(function () {
-    $(".dropdown a").click(function() {
+
+    $(".navbar-brand").click(function() {
         var id = $(this).text();
+        $("#info").hide();
+        $("a.nav-link.dropdown-toggle").removeAttr("style");
         filterMap(id);
     });
 
-    $(".dropdown-menu li a").click(function() {
+    $("a.nav-link.dropdown-toggle").click(function() {
+        $("#info").hide();
         var id = $(this).text();
+        console.log(id + "-"+id.length);
+        $("a.nav-link.dropdown-toggle").removeAttr("style");
+        $(this).css("background","rgba(0,0,0,0.1)");
         filterMap(id);
-        $(this).closest(".dropdown-menu").prev().dropdown("toggle");
-        //console.log($(this).closest(".dropdown-menu").prev().attr("class"));
+    });
+
+    $(".dropdown-item").click(function() {
+        var id = $(this).text();
+        $("#info").hide();
+        filterMap(id);
+        $('.navbar-toggler').click();
     });
 });
 
 function filterMap(id) {
     for (var i = 0; i < markers.length; i++) {
-        if (markers[i].category === id || markers[i].subcategory === id || id === "all") {
+        if (markers[i].category === id || markers[i].subcategory === id || id === "Aberdeen Events Map") {
             markers[i].marker.setVisible(true);
         } else {
             markers[i].marker.setVisible(false);
@@ -436,7 +456,10 @@ function event(date, time, name, desc){
 }
 
 function mySearch(){
+
     $("#info").hide();
+    $("a.nav-link.dropdown-toggle").removeAttr("style");
+
     var keyword = document.getElementById('search_box').value.toLowerCase();
     for (var i = 0; i < markers.length; i++) {
 
@@ -452,12 +475,6 @@ function mySearch(){
         }
     }
 }
-
-$(function() {
-    $("#search_box").autocomplete({
-        source: availableTags.unique()
-    });
-});
 
 function strip(html) {
     var tmp = document.createElement("DIV");
