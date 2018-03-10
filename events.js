@@ -296,7 +296,7 @@ function setMarker(title, cat, scat, website, events, location){
     lati = location.split(',')[0];
     long = location.split(',')[1];
     var close = '<a href="#" style="color:black;padding:0 3px;' +
-        'text-decoration:none;float:right;" onclick="$(\'#info\').hide();">X</a>';
+        'text-decoration:none;float:right;" onclick="$(\'#info\').hide();"><i class="fas fa-times"></i></a>';
     var marker1 = new google.maps.LatLng(lati, long);
     marker = new google.maps.Marker({
         position: marker1,
@@ -388,9 +388,9 @@ function fillMap(e){
                var date = data[i].start_time;
                var time = date.substring(11,16);
                date = date.substring(0,10);
-               var x = '$(\'#event_desc_' + i + '\').toggle()';
+               var x = '$(\'#event_desc_' + i + '\').toggle();';
                var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
-                   '" onclick="' + x + '">' + data[i].name + '</div>';
+                   '" onclick="' + x + '">' + data[i].name + ' <i class="fas fa-caret-down"></i></div>';
                var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;">' + data[i].description + '</div>';
 
                var test = new event(date, time, n, desc);
