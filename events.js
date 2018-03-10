@@ -391,7 +391,7 @@ function fillMap(e){
                var x = '$(\'#event_desc_' + i + '\').toggle()';
                var name  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
                    '" onclick="' + x + '">' + data[i].name + '</div>';
-               var desc = '<div id="event_desc_' + i + '" style="display:none;">' + data[i].description + '</div>';
+               var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;">' + data[i].description + '</div>';
 
                var test = new event(date, time, name, desc);
                events.push(test);
@@ -461,13 +461,13 @@ function mySearch(){
     $("a.nav-link.dropdown-toggle").removeAttr("style");
 
     var keyword = document.getElementById('search_box').value.toLowerCase();
-    for (var i = 0; i < markers.length; i++) {
+    console.log(keyword);
 
+    for (var i = 0; i < markers.length; i++) {
         for (var j = 0; j < markers[i].events.length; j++) {
-            availableTags.push(markers[i].marker.title);
-            var test = strip(markers[i].events[j].name) + strip(markers[i].events[j].desc) + markers[i].marker.title;
-            test = test.toLowerCase();
-            if(test.indexOf(keyword) !== -1 && test !== ""){
+            var test = markers[i].events[j].name + markers[i].marker.title + markers[i].events[j].desc;
+            test = strip(test).toLowerCase();
+            if(test.indexOf(keyword) !== -1){
                 markers[i].marker.setVisible(true);
             } else {
                 markers[i].marker.setVisible(false);
@@ -481,7 +481,6 @@ function strip(html) {
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || "";
 }
-
 
 Array.prototype.unique = function() {
     return this.filter(function (value, index, self) {
