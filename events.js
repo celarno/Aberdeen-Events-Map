@@ -416,7 +416,6 @@ $(document).ready(function () {
     $("a.nav-link.dropdown-toggle").click(function() {
         $("#info").hide();
         var id = $(this).text();
-        console.log(id + "-"+id.length);
         $("a.nav-link.dropdown-toggle").removeAttr("style");
         $(this).css("font-weight","bold");
         filterMap(id);
