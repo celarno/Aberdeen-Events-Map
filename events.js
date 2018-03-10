@@ -406,10 +406,6 @@ function fillMap(e){
 
 $(document).ready(function () {
 
-    if (screenfull.enabled) {
-        screenfull.request();
-    }
-
     $(".navbar-brand").click(function() {
         var id = $(this).text();
         $("#info").hide();
