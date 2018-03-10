@@ -406,6 +406,8 @@ function fillMap(e){
 
 $(document).ready(function () {
 
+    document.body.requestFullscreen();
+
         $(".navbar-brand").click(function () {
             var id = $(this).text();
             $("#info").hide();

@@ -1,0 +1,7 @@
+{
+  "name": "Aberdeen Events Map",
+  "display": "standalone",
+  "background_color": "#fff",
+  "lang": "en-UK",
+  "description": "A simple mapping of events ind Aberdeen (UK)"
+}
