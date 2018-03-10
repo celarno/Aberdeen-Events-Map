@@ -406,6 +406,10 @@ function fillMap(e){
 
 $(document).ready(function () {
 
+    $("#navi").mouseleave(function(){
+        $('.navbar-collapse').collapse('hide');
+    });
+
     $(".navbar-brand").click(function() {
         var id = $(this).text();
         $("#info").hide();
@@ -425,7 +429,7 @@ $(document).ready(function () {
         var id = $(this).text();
         $("#info").hide();
         filterMap(id);
-        $('.navbar-toggler').click();
+        $('.navbar-collapse').collapse('hide');
     });
 });
 
