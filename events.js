@@ -400,7 +400,6 @@ function fillMap(e){
            if(events.length >0){setMarker(title, cat, scat, website, events, loc);}
            // create autocomplete tags
 
-
        });
     });
 }
@@ -461,7 +460,6 @@ function mySearch(){
     $("a.nav-link.dropdown-toggle").removeAttr("style");
 
     var keyword = document.getElementById('search_box').value.toLowerCase();
-    console.log(keyword);
 
     for (var i = 0; i < markers.length; i++) {
         for (var j = 0; j < markers[i].events.length; j++) {

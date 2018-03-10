@@ -6,6 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script src="events.js"></script>
     <meta name="viewport" content="initial-scale=1.0">
@@ -91,8 +92,8 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" id="search_box" placeholder="Search ..." aria-label="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit" onsubmit="mySearch()" onclick="mySearch()">Search</button>
+                <input class="form-control mr-sm-2" type="search" id="search_box" onkeyup="mySearch()" placeholder="Search ..." aria-label="Search">
+                <button class="btn btn-light my-2 my-sm-0" type="submit" onsubmit="mySearch()" onclick="mySearch()"><i class="fas fa-search"></i></button>
             </form>
         </div>
     </nav>
