@@ -8,9 +8,11 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script src="moment.min.js"></script>
     <script src="events.js"></script>
 
     <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta charset="utf-8">
 
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -92,7 +94,22 @@
                         <a class="dropdown-item" href="#">Schools</a>
                     </div>
                 </li>
+<!--
+                <li class="nav-item dropdown">
+                    <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-calendar-alt"></i></button>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" id="date1" href="#">today</a>
+                        <a class="dropdown-item" id="date2" href="#">tomorrow</a>
+                        <a class="dropdown-item" id="date3" href="#">this week</a>
+                        <a class="dropdown-item" id="date4" href="#">next week</a>
+                        <a class="dropdown-item" id="date5" href="#">this month</a>
+                        <a class="dropdown-item" id="date6" href="#">next month</a>
+                        <a class="dropdown-item" id="date7" href="#">this year</a>
+                    </div>
+                </li>
+-->
             </ul>
+
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" id="search_box" onkeyup="mySearch()" placeholder="Search ..." aria-label="Search">
                 <button class="btn btn-light my-2 my-sm-0" type="submit" onsubmit="mySearch();$('.navbar-collapse').collapse('hide');" onclick="mySearch();$('.navbar-collapse').collapse('hide');"><i class="fas fa-search"></i></button>

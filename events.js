@@ -406,31 +406,33 @@ function fillMap(e){
 
 $(document).ready(function () {
 
-    $("#navi").mouseleave(function(){
-        $('.navbar-collapse').collapse('hide');
-    });
+        $(".navbar-brand").click(function () {
+            var id = $(this).text();
+            $("#info").hide();
+            $("a.nav-link.dropdown-toggle").removeAttr("style");
+            filterMap(id);
+        });
 
-    $(".navbar-brand").click(function() {
-        var id = $(this).text();
-        $("#info").hide();
-        $("a.nav-link.dropdown-toggle").removeAttr("style");
-        filterMap(id);
-    });
+        $("a.nav-link.dropdown-toggle").click(function () {
+            $("#info").hide();
+            var id = $(this).text();
+            $("a.nav-link.dropdown-toggle").removeAttr("style");
+            $(this).css("font-weight", "bold");
+            filterMap(id);
+        });
 
-    $("a.nav-link.dropdown-toggle").click(function() {
-        $("#info").hide();
-        var id = $(this).text();
-        $("a.nav-link.dropdown-toggle").removeAttr("style");
-        $(this).css("font-weight","bold");
-        filterMap(id);
-    });
-
-    $(".dropdown-item").click(function() {
-        var id = $(this).text();
-        $("#info").hide();
-        filterMap(id);
-        $('.navbar-collapse').collapse('hide');
-    });
+        $(".dropdown-item").click(function () {
+            var c = $(this).attr('id');
+            c = c.substring(0, 3);
+            if (c==="dat"){
+                filterDate($(this).attr('id'));
+            } else {
+                var id = $(this).text();
+                $("#info").hide();
+                filterMap(id);
+                $('.navbar-collapse').collapse('hide');
+            }
+        });
 });
 
 function filterMap(id) {
@@ -442,6 +444,52 @@ function filterMap(id) {
         }
     }
 }
+
+function filterDate(id) {
+    switch(id) {
+        case "date1":
+            var start = new Date();
+            var end = new Date();
+            console.log(a,b);
+            break;
+        case "date2":
+            d = today.getDate()+1;
+            break;
+        case "date3":
+            var start = moment().startOf('week').toDate();
+            var end   = moment().endOf('week').toDate();
+            break;
+        case "date4":
+            d = today.getDate()+1;
+            break;
+        case "date5":
+            d = today.getDate()+1;
+            break;
+        case "date6":
+            d = today.getDate()+1;
+            break;
+        case "date7":
+            d = today.getDate()+1;
+            break;
+        default:
+            var d = new Date();
+    }
+
+    /*
+    for (var i = 0; i < markers.length; i++) {
+        $(markers[i].events).each(function(){
+            var a = this.date;
+            if(a===id){
+                markers[i].marker.setVisible(true);
+                return false;
+            } else {
+                markers[i].marker.setVisible(false);
+                return true;
+            }
+        });
+    }*/
+}
+
 
 function createMarkers(category, subcategory, marker, events) {
     this.category = category;
