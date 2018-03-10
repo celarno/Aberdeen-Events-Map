@@ -406,7 +406,11 @@ function fillMap(e){
 
 $(document).ready(function () {
 
-    document.body.requestFullscreen();
+    $("form").submit(function(e) {
+        e.preventDefault();
+        mySearch();
+        $('.navbar-collapse').collapse('hide');
+    });
 
         $(".navbar-brand").click(function () {
             var id = $(this).text();
