@@ -406,7 +406,9 @@ function fillMap(e){
 
 $(document).ready(function () {
 
-    window.scrollTo(0,1);
+    if (screenfull.enabled) {
+        screenfull.request();
+    }
 
     $(".navbar-brand").click(function() {
         var id = $(this).text();
