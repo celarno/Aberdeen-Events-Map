@@ -312,7 +312,7 @@ function setMarker(title, cat, scat, website, events, location){
     marker.addListener('click', function () {
         var e = [];
         $(events).each(function() {
-            e.push([this.date + " - " + this.time,this.name,this.desc].join(""));
+            e.push([this.date + " - " + this.time, this.n, this.desc].join(""));
         });
         e = e.join('<br>');
 
@@ -389,11 +389,11 @@ function fillMap(e){
                var time = date.substring(11,16);
                date = date.substring(0,10);
                var x = '$(\'#event_desc_' + i + '\').toggle()';
-               var name  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
+               var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
                    '" onclick="' + x + '">' + data[i].name + '</div>';
                var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;">' + data[i].description + '</div>';
 
-               var test = new event(date, time, name, desc);
+               var test = new event(date, time, n, desc);
                events.push(test);
                i++;
            });
@@ -418,7 +418,7 @@ $(document).ready(function () {
         var id = $(this).text();
         console.log(id + "-"+id.length);
         $("a.nav-link.dropdown-toggle").removeAttr("style");
-        $(this).css("background","rgba(0,0,0,0.1)");
+        $(this).css("font-weight","bold");
         filterMap(id);
     });
 
@@ -447,10 +447,10 @@ function createMarkers(category, subcategory, marker, events) {
     this.events = events;
 }
 
-function event(date, time, name, desc){
+function event(date, time, n, desc){
     this.date = date;
     this.time = time;
-    this.name = name;
+    this.n = n;
     this.desc = desc;
 }
 
@@ -463,8 +463,9 @@ function mySearch(){
 
     for (var i = 0; i < markers.length; i++) {
         for (var j = 0; j < markers[i].events.length; j++) {
-            var test = markers[i].events[j].name + markers[i].marker.title + markers[i].events[j].desc;
+            var test = markers[i].events[j].n + markers[i].marker.title + markers[i].events[j].desc;
             test = strip(test).toLowerCase();
+            test = test.replace(/[^\w\s]/gi, '');
             if(test.indexOf(keyword) !== -1){
                 markers[i].marker.setVisible(true);
             } else {
