@@ -442,50 +442,47 @@ $(document).ready(function () {
         filterMap(id);
     });
 
-    $(function() {
+    var start = moment();
+    var end = moment().add(29, 'days');
 
-        var start = moment();
-        var end = moment().add(29, 'days');
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+        filterDates(start,end);
+    }
 
-        function cb(start, end) {
-            $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
-            filterDates(start,end);
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        locale: {
+            "format": "DD/MM/YYYY",
+            "separator": " - ",
+            "applyLabel": "Apply",
+            "cancelLabel": "Cancel",
+            "fromLabel": "From",
+            "toLabel": "To",
+            "customRangeLabel": "Custom",
+            "weekLabel": "W",
+            "daysOfWeek": [
+                "Su",
+                "Mo",
+                "Tu",
+                "We",
+                "Th",
+                "Fr",
+                "Sa"
+            ],
+            "firstDay": 2
+        },
+        ranges: {
+            'Today': [moment(), moment()],
+            'Tomorrow': [moment().add(1, 'days'), moment().add(1, 'days')],
+            'This Week': [moment(), moment().endOf('week')],
+            'Next Week': [moment().add(1,'week').startOf('week'), moment().add(1,'week').endOf('week')],
+            'This Month': [moment(), moment().endOf('month')],
+            'Next Month': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')]
         }
-
-        $('#reportrange').daterangepicker({
-            startDate: start,
-            endDate: end,
-            locale: {
-                "format": "DD/MM/YYYY",
-                "separator": " - ",
-                "applyLabel": "Apply",
-                "cancelLabel": "Cancel",
-                "fromLabel": "From",
-                "toLabel": "To",
-                "customRangeLabel": "Custom",
-                "weekLabel": "W",
-                "daysOfWeek": [
-                    "Su",
-                    "Mo",
-                    "Tu",
-                    "We",
-                    "Th",
-                    "Fr",
-                    "Sa"
-                ],
-                "firstDay": 2
-            },
-            ranges: {
-                'Today': [moment(), moment()],
-                'Tomorrow': [moment().add(1, 'days'), moment().add(1, 'days')],
-                'This Week': [moment(), moment().endOf('week')],
-                'Next Week': [moment().add(1,'week').startOf('week'), moment().add(1,'week').endOf('week')],
-                'This Month': [moment(), moment().endOf('month')],
-                'Next Month': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')]
-            }
-        }, cb);
-        cb(start, end);
-    });
+    }, cb);
+    cb(start, end);
 });
 
 
