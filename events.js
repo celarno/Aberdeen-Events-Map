@@ -274,8 +274,8 @@ function setMarker(title, cat, scat, website, events, location){
         e = e.join('<br>');
 
         $("#info").html(close + header + e).show();
-        var h = $(document).height() - $(".navi").height();
 
+        var h = $(document).height() - $(".navi").height();
         $("#info").css("height", h);
         var isMobile = window.matchMedia("only screen and (max-width: 768px)");
         if (isMobile.matches) {
@@ -345,11 +345,13 @@ function fillMap(e){
                var time = date.substring(11,16);
                //date = date.substring(0,10);
                date = moment(date);
+               var event_id = '<a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'>fb link</a>';
 
                var x = '$(\'#event_desc_' + i + '\').toggle();';
                var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
                    '" onclick="' + x + '">' + data[i].name + ' <i class="fas fa-caret-down"></i></div>';
-               var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;">' + data[i].description + '</div>';
+               var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;">' + data[i].description + '' +
+                   '<br>' + event_id + '</div>';
 
                if(date < today){
                    // nothing
