@@ -299,10 +299,22 @@ function setMarker(title, cat, scat, website, events, location){
     var close = '<a href="#" style="color:black;padding:0 3px;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();"><i class="fas fa-times"></i></a>';
     var marker1 = new google.maps.LatLng(lati, long);
+
+    var mcolor = "red";
+    if(cat === "Entertainment") {   mcolor = 'red';}
+    if(cat === "Dining") {          mcolor = 'purple';}
+    if(cat === "Accommodation") {    mcolor = 'yellow';}
+    if(cat === "Sports") {          mcolor = 'orange';}
+    if(cat === "Culture") {         mcolor = 'green';}
+    if(cat === "Professional") {    mcolor = 'grey';}
+
+    colorCat(cat,mcolor);
+
     marker = new google.maps.Marker({
         position: marker1,
         title: title,
         map: map,
+        icon: pinSymbol(mcolor),
         opacity: 1
     });
     /*
@@ -328,9 +340,10 @@ function setMarker(title, cat, scat, website, events, location){
 
         //infowindow.open(map, marker);
     });
+    if(events.length <1) {marker.opacity=0.5;}
+
 
     var test = new createMarkers(cat,scat,marker,events);
-    if(events.length <1) {marker.opacity=0.5;}
     markers.push(test);
 
 }
@@ -566,4 +579,19 @@ Array.prototype.unique = function() {
     return this.filter(function (value, index, self) {
         return self.indexOf(value) === index;
     });
+}
+
+function pinSymbol(color) {
+    return {
+        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
+        fillColor: color,
+        fillOpacity: 1,
+        strokeColor: '#000',
+        strokeWeight: 0.2,
+        scale: 1
+    };
+}
+
+function colorCat(a,b){
+    //$("a:contains(" + a + ")").prepend("xxx");
 }
