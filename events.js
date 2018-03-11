@@ -537,7 +537,7 @@ function mySearch(){
 
     var keyword = document.getElementById('search_box').value.toLowerCase();
     for (var i = 0; i < markers.length; i++) {
-        if(markes[i].events.length > 0){
+        if(markers[i].events.length > 0){
             $(markers[i].events).each(function(){
                 var test = this.n + markers[i].marker.title;
                 test = strip(test).toLowerCase().replace(/[^\w\s]/gi, '').trim();
