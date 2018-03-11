@@ -443,10 +443,11 @@ $(document).ready(function () {
     });
 
     var start = moment();
-    var end = moment().add(29, 'days');
+    var end = moment().endOf('year');
 
     function cb(start, end) {
         $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+        $("#info").hide();
         filterDates(start,end);
     }
 
