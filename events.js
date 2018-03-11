@@ -6,6 +6,8 @@ var entries;
 var marker;
 var markers = [];
 var availableTags = [];
+var today = moment();
+
 
 function main(){
     fb_start();
@@ -312,7 +314,7 @@ function setMarker(title, cat, scat, website, events, location){
     marker.addListener('click', function () {
         var e = [];
         $(events).each(function() {
-            e.push([this.date + " - " + this.time, this.n, this.desc].join(""));
+            e.push([this.date.format("DD/MM/YYYY") + " - " + this.time, this.n, this.desc].join(""));
         });
         e = e.join('<br>');
 
@@ -387,17 +389,23 @@ function fillMap(e){
            $(data).each(function(){
                var date = data[i].start_time;
                var time = date.substring(11,16);
-               date = date.substring(0,10);
+               //date = date.substring(0,10);
+               date = moment(date);
+
                var x = '$(\'#event_desc_' + i + '\').toggle();';
                var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
                    '" onclick="' + x + '">' + data[i].name + ' <i class="fas fa-caret-down"></i></div>';
                var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;">' + data[i].description + '</div>';
 
-               var test = new event(date, time, n, desc);
-               events.push(test);
+               if(date < today){
+                   // nothing
+               } else {
+                   var test = new event(date, time, n, desc);
+                   events.push(test);
+               }
                i++;
            });
-           if(events.length >0){setMarker(title, cat, scat, website, events, loc);}
+           setMarker(title, cat, scat, website, events, loc);
            // create autocomplete tags
 
        });
@@ -423,7 +431,7 @@ $(document).ready(function () {
         var id = $(this).text();
         $("#info").hide();
         $("a.nav-link.dropdown-toggle").removeAttr("style");
-        e.css("font-weight", "bold");
+        $(this).css("font-weight", "bold");
         filterMap(id);
     });
 
@@ -433,7 +441,72 @@ $(document).ready(function () {
         $('.navbar-collapse').collapse('hide');
         filterMap(id);
     });
+
+    $(function() {
+
+        var start = moment();
+        var end = moment().add(29, 'days');
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            filterDates(start,end);
+        }
+
+        $('#reportrange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            locale: {
+                "format": "DD/MM/YYYY",
+                "separator": " - ",
+                "applyLabel": "Apply",
+                "cancelLabel": "Cancel",
+                "fromLabel": "From",
+                "toLabel": "To",
+                "customRangeLabel": "Custom",
+                "weekLabel": "W",
+                "daysOfWeek": [
+                    "Su",
+                    "Mo",
+                    "Tu",
+                    "We",
+                    "Th",
+                    "Fr",
+                    "Sa"
+                ],
+                "firstDay": 2
+            },
+            ranges: {
+                'Today': [moment(), moment()],
+                'Tomorrow': [moment().add(1, 'days'), moment().add(1, 'days')],
+                'This Week': [moment(), moment().endOf('week')],
+                'Next Week': [moment().add(1,'week').startOf('week'), moment().add(1,'week').endOf('week')],
+                'This Month': [moment(), moment().endOf('month')],
+                'Next Month': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')]
+            }
+        }, cb);
+        cb(start, end);
+    });
 });
+
+
+function filterDates(start,end){
+    for (var i = 0; i < markers.length; i++) {
+        if(markers[i].events.length > 0){
+            $(markers[i].events).each(function () {
+                var d = this.date;
+                if(d >= start && d <= end){
+                    markers[i].marker.setVisible(true);
+                    return false;
+                } else {
+                    markers[i].marker.setVisible(false);
+                    return true;
+                }
+            });
+        } else {
+            markers[i].marker.setVisible(false);
+        }
+    }
+}
 
 function filterMap(id) {
     for (var i = 0; i < markers.length; i++) {
@@ -443,51 +516,6 @@ function filterMap(id) {
             markers[i].marker.setVisible(false);
         }
     }
-}
-
-function filterDate(id) {
-    switch(id) {
-        case "date1":
-            var start = new Date();
-            var end = new Date();
-            console.log(a,b);
-            break;
-        case "date2":
-            d = today.getDate()+1;
-            break;
-        case "date3":
-            var start = moment().startOf('week').toDate();
-            var end   = moment().endOf('week').toDate();
-            break;
-        case "date4":
-            d = today.getDate()+1;
-            break;
-        case "date5":
-            d = today.getDate()+1;
-            break;
-        case "date6":
-            d = today.getDate()+1;
-            break;
-        case "date7":
-            d = today.getDate()+1;
-            break;
-        default:
-            var d = new Date();
-    }
-
-    /*
-    for (var i = 0; i < markers.length; i++) {
-        $(markers[i].events).each(function(){
-            var a = this.date;
-            if(a===id){
-                markers[i].marker.setVisible(true);
-                return false;
-            } else {
-                markers[i].marker.setVisible(false);
-                return true;
-            }
-        });
-    }*/
 }
 
 

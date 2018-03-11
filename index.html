@@ -8,12 +8,12 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
-    <script src="moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css">
     <script src="events.js"></script>
 
     <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="manifest" href="manifest.webmanifest">
-    <meta name="mobile-web-app-capable" content="yes">
     <meta charset="utf-8">
 
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -95,20 +95,13 @@
                         <a class="dropdown-item" href="#">Schools</a>
                     </div>
                 </li>
-<!--
-                <li class="nav-item dropdown">
-                    <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-calendar-alt"></i></button>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="date1" href="#">today</a>
-                        <a class="dropdown-item" id="date2" href="#">tomorrow</a>
-                        <a class="dropdown-item" id="date3" href="#">this week</a>
-                        <a class="dropdown-item" id="date4" href="#">next week</a>
-                        <a class="dropdown-item" id="date5" href="#">this month</a>
-                        <a class="dropdown-item" id="date6" href="#">next month</a>
-                        <a class="dropdown-item" id="date7" href="#">this year</a>
-                    </div>
+
+                <li class="nav-item"><a class="nav-link">
+                    <div id="reportrange" class="pull-right">
+                        <i class="far fa-calendar-alt"></i>&nbsp;<span></span><b class="caret"></b>
+                    </div></a>
                 </li>
--->
+
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
