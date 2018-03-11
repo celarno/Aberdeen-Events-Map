@@ -412,32 +412,26 @@ $(document).ready(function () {
         $('.navbar-collapse').collapse('hide');
     });
 
-    $(".navbar-brand").click(function () {
+    $(".navbar-brand").click(function() {
         var id = $(this).text();
         $("#info").hide();
         $("a.nav-link.dropdown-toggle").removeAttr("style");
         filterMap(id);
     });
 
-    $("a.nav-link.dropdown-toggle").click(function () {
+    $("a.nav-link.dropdown-toggle").click(function() {
         var id = $(this).text();
         $("#info").hide();
         $("a.nav-link.dropdown-toggle").removeAttr("style");
-        $(this).css("font-weight", "bold");
+        e.css("font-weight", "bold");
         filterMap(id);
     });
 
-    $(".dropdown-item").click(function () {
-        var c = $(this).attr('id');
-        c = c.substring(0, 3);
-        if (c==="dat"){
-            filterDate($(this).attr('id'));
-        } else {
-            var id = $(this).text();
-            $("#info").hide();
-            filterMap(id);
-            $('.navbar-collapse').collapse('hide');
-        }
+    $(".dropdown-item").click(function() {
+        var id = $(this).text();
+        $("#info").hide();
+        $('.navbar-collapse').collapse('hide');
+        filterMap(id);
     });
 });
 
