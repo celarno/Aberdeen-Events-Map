@@ -303,7 +303,7 @@ function setMarker(title, cat, scat, website, events, location){
     var mcolor = "red";
     if(cat === "Entertainment") {   mcolor = 'red';}
     if(cat === "Dining") {          mcolor = 'purple';}
-    if(cat === "Accommodation") {    mcolor = 'yellow';}
+    if(cat === "Accommodation") {   mcolor = 'yellow';}
     if(cat === "Sports") {          mcolor = 'orange';}
     if(cat === "Culture") {         mcolor = 'green';}
     if(cat === "Professional") {    mcolor = 'grey';}
@@ -317,11 +317,7 @@ function setMarker(title, cat, scat, website, events, location){
         icon: pinSymbol(mcolor),
         opacity: 1
     });
-    /*
-    var infowindow = new google.maps.InfoWindow({
-        content: header + content
-    });
-    */
+
     marker.addListener('click', function () {
         var e = [];
         $(events).each(function() {
@@ -337,12 +333,9 @@ function setMarker(title, cat, scat, website, events, location){
         if (isMobile.matches) {
             $("#info").css("width", "100%");
         }
-
-        //infowindow.open(map, marker);
     });
+
     if(events.length <1) {marker.opacity=0.5;}
-
-
     var test = new createMarkers(cat,scat,marker,events);
     markers.push(test);
 
@@ -553,7 +546,7 @@ function mySearch(){
     for (var i = 0; i < markers.length; i++) {
         if(markers[i].events.length > 0){
             $(markers[i].events).each(function(){
-                var test = this.n + markers[i].marker.title;
+                var test = this.n + markers[i].marker.title + this.desc;
                 test = strip(test).toLowerCase().replace(/[^\w\s]/gi, '').trim();
                 if(test.indexOf(keyword) !== -1){
                     markers[i].marker.setVisible(true);
