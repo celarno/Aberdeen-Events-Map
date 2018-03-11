@@ -331,6 +331,7 @@ function setMarker(title, cat, scat, website, events, location){
     });
 
     var test = new createMarkers(cat,scat,marker,events);
+    if(events.length <1) {marker.opacity=0.5;}
     markers.push(test);
 
 }
