@@ -70,6 +70,10 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     overflow: auto;
 }
 
+.fab fa-facebook-square {
+    color: #bbb;
+}
+
 .event_names:hover {
     cursor: pointer;
 }
