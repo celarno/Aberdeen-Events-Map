@@ -5,7 +5,6 @@ var events;
 var entries;
 var marker;
 var markers = [];
-var availableTags = [];
 var today = moment();
 
 
@@ -538,17 +537,21 @@ function mySearch(){
 
     var keyword = document.getElementById('search_box').value.toLowerCase();
     for (var i = 0; i < markers.length; i++) {
-        $(markers[i].events).each(function(){
-            var test = this.n + markers[i].marker.title + this.desc;
-            test = strip(test).toLowerCase().replace(/[^\w\s]/gi, '').trim();
-            if(test.indexOf(keyword) !== -1){
-                markers[i].marker.setVisible(true);
-                return false;
-            } else {
-                markers[i].marker.setVisible(false);
-                return true;
-            }
-        });
+        if(markes[i].events.length > 0){
+            $(markers[i].events).each(function(){
+                var test = this.n + markers[i].marker.title;
+                test = strip(test).toLowerCase().replace(/[^\w\s]/gi, '').trim();
+                if(test.indexOf(keyword) !== -1){
+                    markers[i].marker.setVisible(true);
+                    return false;
+                } else {
+                    markers[i].marker.setVisible(false);
+                    return true;
+                }
+            });
+        } else {
+            markers[i].marker.setVisible(false);
+        }
     }
 }
 
