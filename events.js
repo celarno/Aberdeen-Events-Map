@@ -345,7 +345,7 @@ function fillMap(e){
                var time = date.substring(11,16);
                //date = date.substring(0,10);
                date = moment(date);
-               var event_id = '<a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'>fb link</a>';
+               var event_id = '<a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'><i class=\'fab fa-facebook-square\'></i></a>';
 
                var x = '$(\'#event_desc_' + i + '\').toggle();';
                var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
