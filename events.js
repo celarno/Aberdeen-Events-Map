@@ -377,14 +377,14 @@ $(document).ready(function () {
     $(".navbar-brand").click(function() {
         var id = $(this).text();
         $("#info").hide();
-        $("a.nav-link.dropdown-toggle").removeAttr("style");
+        $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
         filterMap(id);
     });
 
     $("a.nav-link.dropdown-toggle").click(function() {
         var id = $(this).text();
         $("#info").hide();
-        $("a.nav-link.dropdown-toggle").removeAttr("style");
+        $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
         $(this).css("font-weight", "bold");
         filterMap(id);
     });
@@ -488,7 +488,7 @@ function event(date, time, n, desc){
 function mySearch(){
 
     $("#info").hide();
-    $("a.nav-link.dropdown-toggle").removeAttr("style");
+    $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
 
     var keyword = document.getElementById('search_box').value.toLowerCase();
     for (var i = 0; i < markers.length; i++) {
@@ -534,5 +534,5 @@ function pinSymbol(color) {
 }
 
 function colorCat(a,b){
-    //$("a:contains(" + a + ")").css("background-color", b);
+    $("a:contains(" + a + ")").css("border-bottom", "solid " + b);
 }
