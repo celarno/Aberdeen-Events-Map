@@ -278,7 +278,9 @@ function fb_start() {
 }
 
 var fb_events = function(page, callback){
-    var token = '541885672846625|L29fSufvR0PLhEv2XI9DL76HdqM';
+    //var token = '541885672846625|L29fSufvR0PLhEv2XI9DL76HdqM';
+    var token = 'EAACEdEose0cBAPPrAQnra5oEH6l7OQMPZBTjoMZBWz9OFl6iJLEPAgGuaim9EMHwQzvzknjYme0LRG8yblqcKfyyS2GIdsZCvLkJ2RvZCLiaQAQJyVvfJ3wjg9q4ApTrn27ZChtYcGxPfAPWF908zLnf9nDxiHbEGV4wm2yHRVWDx2XRUOnTwL8qMiXnplV4ZD';
+
     FB.api(page, 'GET', {access_token: token},
         function(response) {
             if (response.data) {
@@ -451,7 +453,6 @@ function filterMap(id) {
         }
     }
 }
-
 
 function createMarkers(category, subcategory, marker, events) {
     this.category = category;
