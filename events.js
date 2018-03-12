@@ -213,11 +213,11 @@ function initMap() {
         zoom: 13,
         styles: style
     });
-    console.log('map loaded ... ');
+    //console.log('map loaded ... ');
 }
 
 function setMarker(title, cat, scat, website, events, location){
-    console.log('setting marker ...');
+    //console.log('setting marker ...');
 
     var header = "<h5>" + cat + " - " + scat + "</h5><h2>" + title + "</h2><p>" + website + "</p>";
     lati = location.split(',')[0];
@@ -274,7 +274,7 @@ function fb_start() {
         xfbml: true,
         version: 'v2.12'
     });
-    console.log('fb initialized ...');
+    //console.log('fb initialized ...');
 }
 
 var fb_events = function(page, callback){
@@ -284,7 +284,7 @@ var fb_events = function(page, callback){
             if (response.data) {
                 data = response.data;
                 callback(data.slice(0,5)); // just take first 5 events
-            } else { console.log("no events! " + page); }
+            } else { console.log(page, "no events!",response); }
         });
 };
 
@@ -309,6 +309,7 @@ function fillMap(e){
        var t = new URL(this.gsx$facebook.$t).pathname;
        this.gsx$facebook.$t = t + 'events';
        var fb = this.gsx$facebook.$t;
+
        var title = this.gsx$name.$t;
        var loc = this.gsx$location.$t;
        var cat = this.gsx$cat.$t;
@@ -347,6 +348,7 @@ function fillMap(e){
 }
 
 $(document).ready(function () {
+    $(".gm-svpc").hide();
 
     $("form").submit(function(e) {
         e.preventDefault();
@@ -377,7 +379,7 @@ $(document).ready(function () {
     });
 
     var start = moment();
-    var end = moment().endOf('year');
+    var end = moment();
 
     function cb(start, end) {
         $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
@@ -398,15 +400,15 @@ $(document).ready(function () {
             "customRangeLabel": "Custom",
             "weekLabel": "W",
             "daysOfWeek": [
-                "Su",
                 "Mo",
                 "Tu",
                 "We",
                 "Th",
                 "Fr",
-                "Sa"
+                "Sa",
+                "Su"
             ],
-            "firstDay": 2
+            "firstDay": 0
         },
         ranges: {
             'Today': [moment(), moment()],
