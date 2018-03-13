@@ -386,6 +386,7 @@ $(document).ready(function () {
     function cb(start, end) {
         $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
         $("#info").hide();
+        $('#search_box').val("");
         filterDates(start,end);
     }
 
@@ -488,7 +489,13 @@ function mySearch(){
                 }
             });
         } else {
-            markers[i].marker.setVisible(false);
+            var test = markers[i].marker.title;
+            test = test.toLowerCase()
+            if (test.indexOf(keyword) !== -1) {
+                continue;
+            } else {
+                markers[i].marker.setVisible(false);
+            }
         }
     }
 }
