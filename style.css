@@ -7,12 +7,25 @@ html, body {
     position: relative;
 }
 
+h5 {
+    font-weight: lighter;
+}
+
 #map {
     height: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1;
+}
+
+#clear {
+    padding: 1em;
+    z-index: 10;
+}
+
+#clear a {
+    color: #565656;
 }
 
 .gm-style-iw {
@@ -53,14 +66,14 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 #info {
-    width: 45%;
+    width: 40%;
     position: absolute;
     padding: 2em;
     margin: 0;
     bottom: 0;
     right: 0;
     z-index: 20;
-    font-size: small;
+    font-size: 10pt;
     display: none;
     box-sizing: border-box;
     -webkit-box-shadow: -20px 0px 59px -13px rgba(0,0,0,0.35);
@@ -100,6 +113,6 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 
 @supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
     #info, .bg-light, .navbar {
-        background: rgba(255,255,255,0.9) !important;
+        background: rgba(255,255,255,0.85) !important;
     }
 }
