@@ -241,7 +241,7 @@ function setMarker(title, cat, scat, website, events, location, fb){
         position: marker1,
         title: title,
         map: map,
-        icon: pinSymbol(mcolor),
+        icon: pinSymbol(mcolor, 1),
         opacity: 1
     });
 
@@ -253,13 +253,16 @@ function setMarker(title, cat, scat, website, events, location, fb){
     var header = close + "<div style='background:url( " + img + ")'>"
     header = header + "<div style='background-color:" + mcolor + "'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
     header = header + cat + " - " + scat + "</h5></div>";
-    header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em;'>" + title + "</h4></div>";
+    header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em;font-weight:normal;'>" + title + "</h4></div>";
 
     header = header + "<div style='padding: 0.5em;'>";
     website = "<p style='margin-top: 5em;'><a style='color:#565656;' target='_blank' href='" + url + "'><i class='fas fa-globe'></i> Website</a>";
     website = website + "<br><a style='color:#565656;' target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i> Facebook</a></p>";
 
     marker.addListener('click', function () {
+
+        //marker.setIcon(pinSymbol(mcolor,5));
+
         var e = [];
         $(events).each(function() {
             var dt = "<font color='#565656'>" + this.date.format("DD/MM/YYYY") + " - " + this.time + "</font>";
@@ -358,7 +361,7 @@ function fillMap(e){
                var event_id = '<a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'><i class=\'fab fa-facebook-square\'></i></a>';
 
                var x = '$(\'#event_desc_' + i + '\').toggle();';
-               var n  = '<div style="font-weight:bold;" class="event_names" id="event_name_' + i +
+               var n  = '<div style="font-weight:600;" class="event_names" id="event_name_' + i +
                    '" onclick="' + x + '"><i class="fas fa-caret-right"></i> ' + data[i].name + '</div>';
                var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;">' + data[i].description + '' +
                    '<br>' + event_id + '</div>';
@@ -385,7 +388,7 @@ $(document).ready(function () {
     var p = $('#clear');
     p.css('position', 'absolute');
     var newCoords = {
-        top: $('.navbar-brand').height() + 50,
+        top: $('.navbar-brand').height() + 40,
         left: p.position().left
     };
     p.offset(newCoords);
@@ -426,6 +429,7 @@ function filterDates(start, end){
                 var d = this.date;
                 if(d >= start && d <= end){
                     markers[i].marker.setVisible(true);
+                    $("#clear").show();
                     return false;
                 } else {
                     markers[i].marker.setVisible(false);
@@ -450,6 +454,7 @@ function filterMap(id) {
     }
 
     for (var i = 0; i < markers.length; i++) {
+
         var cf = checkFilter(i);
         var cat = markers[i].category;
         var subcat = markers[i].subcategory;
@@ -458,11 +463,11 @@ function filterMap(id) {
             markers[i].marker.setVisible(true);
         }
 
-        if (( cat === id || subcat === id) && cf ===false) {
+        if (( cat === id || subcat === id) && cf === false) {
             markers[i].marker.setVisible(true);
         }
 
-        if (( cat !== id || subcat !== id) && cf ===true) {
+        if (( cat !== id || subcat !== id) && cf === true) {
             markers[i].marker.setVisible(false);
         }
     }
@@ -530,14 +535,14 @@ Array.prototype.unique = function() {
     });
 }
 
-function pinSymbol(color) {
+function pinSymbol(color,size) {
     return {
         path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
         fillColor: color,
         fillOpacity: 1,
         strokeColor: '#000',
         strokeWeight: 0.2,
-        scale: 1
+        scale: size
     };
 }
 
@@ -588,5 +593,6 @@ function daterange(){
 function cb(start, end) {
     $('#reportrange').find('span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
     $("#info").hide();
+
     filterDates(start,end);
 }
