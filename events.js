@@ -390,32 +390,27 @@ $(document).ready(function () {
     };
     p.offset(newCoords);
 
-    $("form").submit(function(e) {
-        e.preventDefault();
-        mySearch();
-        $('.navbar-collapse').collapse('hide');
-    });
-
     $(".navbar-brand").click(function() {
-        var id = $(this).text();
-        $("#info").hide();
-        $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
+        var id = "clear";
         filterMap(id);
     });
 
     $("a.nav-link.dropdown-toggle").click(function() {
         var id = $(this).text();
-        $("#info").hide();
-        $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
         $(this).css("font-weight", "bold");
         filterMap(id);
     });
 
     $(".dropdown-item").click(function() {
         var id = $(this).text();
-        $("#info").hide();
         $('.navbar-collapse').collapse('hide');
         filterMap(id);
+    });
+
+    $("form").submit(function(e) {
+        e.preventDefault();
+        mySearch();
+        $('.navbar-collapse').collapse('hide');
     });
 
     daterange();
@@ -445,15 +440,29 @@ function filterDates(start, end){
 
 function filterMap(id) {
     $("#clear").show();
+    $("#info").hide();
+    $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
+
+    if (id === "clear") {
+        $('#search_box').val("");
+        $("#clear").hide();
+        cb(moment(), moment());
+    }
+
     for (var i = 0; i < markers.length; i++) {
-        if (id === "ABERSCENE") {
+        var cf = checkFilter(i);
+        var cat = markers[i].category;
+        var subcat = markers[i].subcategory;
+
+        if (cf === false && id === "clear") {
             markers[i].marker.setVisible(true);
-            $('#search_box').val("");
-            $("#clear").hide();
-            cb(moment(), moment());
-        } else if ((markers[i].category === id || markers[i].subcategory === id) && checkFilter(i) ){
-                markers[i].marker.setVisible(true);
-        } else {
+        }
+
+        if (( cat === id || subcat === id) && cf ===false) {
+            markers[i].marker.setVisible(true);
+        }
+
+        if (( cat !== id || subcat !== id) && cf ===true) {
             markers[i].marker.setVisible(false);
         }
     }
@@ -495,7 +504,7 @@ function mySearch(){
             });
         } else {
             var test = markers[i].marker.title;
-            test = test.toLowerCase()
+            test = test.toLowerCase();
             if (test.indexOf(keyword) !== -1) {
                 continue;
             } else {
@@ -577,8 +586,7 @@ function daterange(){
 }
 
 function cb(start, end) {
-    $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+    $('#reportrange').find('span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
     $("#info").hide();
-    $('#search_box').val("");
     filterDates(start,end);
 }
