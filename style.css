@@ -28,6 +28,11 @@ h5 {
     color: #565656;
 }
 
+#clear a:hover {
+    text-decoration: none;
+    color: #000000;
+}
+
 .gm-style-iw {
     max-width: 400px !important;
     overflow: auto !important;
