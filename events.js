@@ -253,7 +253,7 @@ function setMarker(title, cat, scat, website, events, location, fb){
     var header = close + "<div style='background:url( " + img + ")'>"
     header = header + "<div style='background-color:" + mcolor + "'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
     header = header + cat + " - " + scat + "</h5></div>";
-    header = header + "<h4 style='padding:0.1em;'>" + title + "</h4></div>";
+    header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em;'>" + title + "</h4></div>";
 
     header = header + "<div style='padding: 0.5em;'>";
     website = "<p style='margin-top: 5em;'><a style='color:#565656;' target='_blank' href='" + url + "'><i class='fas fa-globe'></i> Website</a>";
