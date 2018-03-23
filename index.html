@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Aberdeen Events Map</title>
+    <title>ABERSCENE</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -25,8 +25,8 @@
 <body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApTvTwhzrDL5KuyNJAukTGCkDE6hOudVI&callback=main" async defer></script>
 <div class="navi">
-    <nav class="navbar navbar-expand-xl navbar-light" style="background: rgba(255,255,255,0.9);">
-        <a class="navbar-brand" href="#">Aberdeen Events Map</a>
+    <nav id="navibar" class="navbar navbar-expand-xl navbar-light" style="background: rgba(255,255,255,0.9);">
+        <a class="navbar-brand" href="#">ABER<strong>SCENE</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -104,6 +104,8 @@
                         <i class="far fa-calendar-alt"></i>&nbsp;<span></span><b class="caret"></b>
                     </div></a>
                 </li>
+
+
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" id="search_box" onkeyup="mySearch()" placeholder="Search ..." aria-label="Search">
@@ -111,7 +113,9 @@
             </form>
         </div>
     </nav>
+    <div id="clear"><a href="#" onclick="filterMap('clear');"><i class="fas fa-paint-brush"></i> clear filter</a></div>
 </div>
+
 <div id="map"></div>
 <div id="info" class="box"></div>
 </body>
