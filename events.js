@@ -256,8 +256,8 @@ function setMarker(title, cat, scat, website, events, location, fb){
     header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em;font-weight:normal;'>" + title + "</h4></div>";
 
     header = header + "<div style='padding: 0.5em;'>";
-    website = "<p style='margin-top: 5em;'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i> Website</a>";
-    website = website + "<br><a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i> Facebook</a></p>";
+    website = "<p style='margin-top: 5em;'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website</a>";
+    website = website + "<br><a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbsp;&nbsp;Facebook</a></p>";
 
     marker.addListener('click', function () {
 
