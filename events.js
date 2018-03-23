@@ -241,7 +241,7 @@ function setMarker(title, cat, scat, website, events, location, fb){
         position: marker1,
         title: title,
         map: map,
-        icon: pinSymbol(mcolor, 1),
+        icon: pinSymbol(mcolor, 0.6),
         opacity: 1
     });
 
@@ -537,11 +537,12 @@ Array.prototype.unique = function() {
 
 function pinSymbol(color,size) {
     return {
-        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
+        //path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
+        path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
         fillColor: color,
         fillOpacity: 1,
-        strokeColor: '#000',
-        strokeWeight: 0.2,
+        strokeColor: '',
+        strokeWeight: 0,
         scale: size
     };
 }
