@@ -245,13 +245,12 @@ function setMarker(title, cat, scat, website, events, location, fb){
         opacity: 1
     });
 
-    var img = "https://www.visitscotland.com/blog/wp-content/uploads/2015/05/Aberdeen-feature.jpg";
     var img = "";
 
     var close = '<a href="#" style="margin-top:-1em;color:black;padding:0 3px;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();"><i class="fas fa-times"></i></a><br>';
-    var header = close + "<div style='background:url( " + img + ")'>"
-    header = header + "<div style='background-color:" + mcolor + "'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
+    var header = close + "<div style='background:url( " + img + ")'>";
+    header = header + "<div style='background:linear-gradient(to right, " + mcolor + "," + mcolor + ");'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
     header = header + cat + " - " + scat + "</h5></div>";
     header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em;font-weight:normal;'>" + title + "</h4></div>";
 
@@ -400,7 +399,7 @@ $(document).ready(function () {
 
     $("a.nav-link.dropdown-toggle").click(function() {
         var id = $(this).text();
-        $(this).css("font-weight", "bold");
+        //$(this).css("font-weight", "bold");
         filterMap(id);
     });
 
@@ -445,7 +444,6 @@ function filterDates(start, end){
 function filterMap(id) {
     $("#clear").show();
     $("#info").hide();
-    $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
 
     if (id === "clear") {
         $('#search_box').val("");
@@ -463,8 +461,13 @@ function filterMap(id) {
             markers[i].marker.setVisible(true);
         }
 
+        if (( cat === id || subcat === id) && cf === true) {
+            continue;
+        }
+
         if (( cat === id || subcat === id) && cf === false) {
             markers[i].marker.setVisible(true);
+            continue;
         }
 
         if (( cat !== id || subcat !== id) && cf === true) {
@@ -537,7 +540,6 @@ Array.prototype.unique = function() {
 
 function pinSymbol(color,size) {
     return {
-        //path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
         path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
         fillColor: color,
         fillOpacity: 1,
