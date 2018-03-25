@@ -253,12 +253,11 @@ function setMarker(title, cat, scat, website, events, location, fb){
     header = header + "<div style='background:linear-gradient(to right, " + mcolor + "," + mcolor + ");'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
     header = header + cat + " - " + scat + "</h5></div>";
     header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em;font-weight:normal;'>" + title + "</h4></div>";
-
-    header = header + "<div style='padding: 0.5em;'>";
+    header = header + "<div style ='padding: 0.5em;margin-top: 2em;'>";
 
     var address;
     var surl;
-    if (events.length > 0 && events[0].address.location.street !== undefined){
+    if (events.length > 0 && events[0].address.location !== undefined){
         address = events[0].address.location.street + ', ' + events[0].address.location.zip;
         surl = "https://www.google.co.uk/search?q=" + address;
     } else {
@@ -286,7 +285,6 @@ function setMarker(title, cat, scat, website, events, location, fb){
 
         var e = [];
         $(events).each(function() {
-
             var dt = "<font color='#565656'>" + this.date.format("DD/MM/YYYY") + " - " + this.time + "</font>";
             e.push([dt, this.n, this.desc].join(""));
         });
@@ -380,7 +378,8 @@ function fillMap(e){
                var time = date.substring(11,16);
                //date = date.substring(0,10);
                date = moment(date);
-               var event_id = '<a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'><i class=\'fab fa-facebook-square\'></i></a>';
+
+               var event_id = '<a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'><i class=\'fab fa-facebook-square\'></i> FB event</a>';
 
                var x = '$(\'#event_desc_' + i + '\').toggle();';
                var n  = '<div style="font-weight:600;" class="event_names" id="event_name_' + i +
@@ -436,6 +435,7 @@ $(document).ready(function () {
         mySearch();
         $('.navbar-collapse').collapse('hide');
     });
+
 
     daterange();
 
@@ -620,7 +620,6 @@ function daterange(){
 function cb(start, end) {
     $('#reportrange').find('span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
     $("#info").hide();
-
     filterDates(start,end);
 }
 
@@ -663,3 +662,9 @@ function getAddress(location,callback) {
     });
 }
 */
+
+function calExport(name, begin,end) {
+    var cal = ics();
+    cal.addEvent(name, "...", loc, begin, end);
+    cal.download();
+}
