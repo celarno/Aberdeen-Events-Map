@@ -399,7 +399,7 @@ $(document).ready(function () {
 
     $("a.nav-link.dropdown-toggle").click(function() {
         var id = $(this).text();
-        //$(this).css("font-weight", "bold");
+        $(this).css("font-weight", "bold");
         filterMap(id);
     });
 
@@ -444,6 +444,7 @@ function filterDates(start, end){
 function filterMap(id) {
     $("#clear").show();
     $("#info").hide();
+    $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
 
     if (id === "clear") {
         $('#search_box').val("");
