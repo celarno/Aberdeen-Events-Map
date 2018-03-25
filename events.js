@@ -255,22 +255,44 @@ function setMarker(title, cat, scat, website, events, location, fb){
     header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em;font-weight:normal;'>" + title + "</h4></div>";
 
     header = header + "<div style='padding: 0.5em;'>";
+
+    var address;
+    var surl;
+    if (events.length > 0 && events[0].address.location.street !== undefined){
+        address = events[0].address.location.street + ', ' + events[0].address.location.zip;
+        surl = "https://www.google.co.uk/search?q=" + address;
+    } else {
+        address = "Show address";
+        surl = "https://www.google.co.uk/search?q=" + title;
+    }
+    surl = surl + "+aberdeen+uk+address";
+
+
     website = "<p style='margin-top: 5em;'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website</a>";
-    website = website + "<br><a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbsp;&nbsp;Facebook</a></p>";
+    website = website + "<br><a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbsp;&nbsp;Facebook</a>";
+    website = website + "<br><a target='_blank' href='" + surl + "'><i class='fas fa-map-marker'></i>&nbsp;&nbsp;"+ address + "</p>";
+
+    /*var search = title + ", Aberdeen, UK";
+    var photos = [];
+    getPhotos(search, function(p) {
+        $(p).each(function(){
+            photos.push(this);
+        });
+    });*/
+
+
 
     marker.addListener('click', function () {
 
-        //marker.setIcon(pinSymbol(mcolor,5));
-
         var e = [];
         $(events).each(function() {
-            var dt = "<font color='#565656'>" + this.date.format("DD/MM/YYYY") + " - " + this.time + "</font>";
 
+            var dt = "<font color='#565656'>" + this.date.format("DD/MM/YYYY") + " - " + this.time + "</font>";
             e.push([dt, this.n, this.desc].join(""));
         });
         e = e.join('<br>');
 
-        $("#info").html('<div id="infobox_content">' + header + e + website + '</div></div>').show();
+        $("#info").html('<div id="infobox_content">' + header + e + website +'</div></div>').show();
 
         var isMobile = window.matchMedia("only screen and (max-width: 768px)");
         if (isMobile.matches) {
@@ -354,6 +376,7 @@ function fillMap(e){
            var i = 0;
            $(data).each(function(){
                var date = data[i].start_time;
+               var address = data[i].place;
                var time = date.substring(11,16);
                //date = date.substring(0,10);
                date = moment(date);
@@ -368,13 +391,12 @@ function fillMap(e){
                if(date < today){
                    // nothing
                } else {
-                   var test = new event(date, time, n, desc);
+                   var test = new event(date, time, n, desc, address);
                    events.push(test);
                }
                i++;
            });
-           setMarker(title, cat, scat, website, events, loc,fb);
-           // create autocomplete tags
+           setMarker(title, cat, scat, website, events, loc, fb);
 
        });
     });
@@ -484,11 +506,12 @@ function createMarkers(category, subcategory, marker, events) {
     this.events = events;
 }
 
-function event(date, time, n, desc){
+function event(date, time, n, desc, address){
     this.date = date;
     this.time = time;
     this.n = n;
     this.desc = desc;
+    this.address = address;
 }
 
 function mySearch(){
@@ -600,3 +623,43 @@ function cb(start, end) {
 
     filterDates(start,end);
 }
+
+/*
+function getPhotos(searchTerm, callback){
+    var searchUrl = 'https://www.googleapis.com/customsearch/v1?' +
+                    '&q=' + encodeURIComponent(searchTerm) +
+                    '&cx=' + '013802545209530999668:9xg0q9hjask' +
+                    '&imgSize=medium' +
+                    '&num=3' +
+                    '&key=AIzaSyApTvTwhzrDL5KuyNJAukTGCkDE6hOudVI';
+
+    var x = new XMLHttpRequest();
+    x.open('GET', searchUrl);
+    x.responseType = 'json';
+    x.onload = function() {
+        var response = x.response;
+        if (!response) {
+            console.log( "loading error" )
+            console.log(response)
+        }
+        callback(response);
+    };
+
+    x.onerror = function() {console.log("network error");};
+    x.send();
+}
+
+function getAddress(location,callback) {
+    // reverse geo coding
+    var geocoder = new google.maps.Geocoder;
+    var latlngStr = location.split(',', 2);
+    var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+    geocoder.geocode({'location': latlng}, function(results, status) {
+        if (status === 'OK') {
+            callback(results[0].formatted_address);
+        } else {
+            callback(false);
+        }
+    });
+}
+*/
