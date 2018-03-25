@@ -252,8 +252,8 @@ function setMarker(title, cat, scat, website, events, location, fb){
     var header = close + "<div style='background:url( " + img + ")'>";
     header = header + "<div style='background:linear-gradient(to right, " + mcolor + "," + mcolor + ");'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
     header = header + cat + " - " + scat + "</h5></div>";
-    header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em;font-weight:normal;'>" + title + "</h4></div>";
-    header = header + "<div style ='padding: 0.5em;margin-top: 2em;'>";
+    header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em; font-weight:normal;'>" + title + "</h4></div>";
+    header = header + "<hr class='style14'><div style ='padding: 0.5em 2em;'>";
 
     var address;
     var surl;
@@ -273,10 +273,9 @@ function setMarker(title, cat, scat, website, events, location, fb){
     }
     surl = surl + "+aberdeen+uk+address";
 
-
-    website = "<p style='margin-top: 5em;'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website</a>";
-    website = website + "<br><a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbsp;&nbsp;Facebook</a>";
-    website = website + "<br><a target='_blank' href='" + surl + "'><i class='fas fa-map-marker'></i>&nbsp;&nbsp;"+ address + "</p>";
+    website = "<hr class='style14' style='margin-top:2em;'><p style='margin-top:2em;' align='center'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website&nbsp;&nbsp;</a>";
+    website = website + "<a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbspFacebook&nbsp;&nbsp;</a>";
+    website = website + "<a target='_blank' href='" + surl + "'><i class='fas fa-map-marker'></i>&nbsp;"+ address + "</p></div>";
 
     /*var search = title + ", Aberdeen, UK";
     var photos = [];
@@ -285,8 +284,6 @@ function setMarker(title, cat, scat, website, events, location, fb){
             photos.push(this);
         });
     });*/
-
-
 
     marker.addListener('click', function () {
 
@@ -297,7 +294,7 @@ function setMarker(title, cat, scat, website, events, location, fb){
         });
         e = e.join('<br>');
 
-        $("#info").html('<div id="infobox_content">' + header + e + website +'</div></div>').show();
+        $("#info").html('<div style="position:relative;" id="infobox_content">' + header + e + website).show();
 
         var isMobile = window.matchMedia("only screen and (max-width: 768px)");
         if (isMobile.matches) {
@@ -386,12 +383,14 @@ function fillMap(e){
                //date = date.substring(0,10);
                date = moment(date);
 
-               var event_id = '<a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'><i class=\'fab fa-facebook-square\'></i> FB event</a>';
+               var cali = "calExport($(this).parent().prev().text(),$('h4').text()," + moment(data[i].start_time)+","+moment(data[i].end_time) +");";
+               var event_id = '<br><a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'><i class=\'fab fa-facebook-square\'></i> FB event</a>';
+               event_id = event_id + "<br><a href='#' onclick=" + cali + "><i class='fab fa-facebook-square'></i> Add to calendar</a>";
 
                var x = '$(\'#event_desc_' + i + '\').toggle();';
                var n  = '<div style="font-weight:600;" class="event_names" id="event_name_' + i +
                    '" onclick="' + x + '"><i class="fas fa-caret-right"></i> ' + data[i].name + '</div>';
-               var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;">' + data[i].description + '' +
+               var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;text-align: left;">' + data[i].description + '' +
                    '<br>' + event_id + '</div>';
 
                if(date < today){
@@ -670,10 +669,13 @@ function getAddress(location,callback) {
 }
 */
 
-function calExport(name, begin,end) {
+function calExport(name, loc, begin, end) {
     var cal = ics();
     cal.addEvent(name, "...", loc, begin, end);
     cal.download();
 }
 
 
+function clean(str) {
+    return str.replace(/[^0-9a-z-A-Z ]/g, "").replace(/ +/, " ")
+}
