@@ -257,9 +257,16 @@ function setMarker(title, cat, scat, website, events, location, fb){
 
     var address;
     var surl;
-    if (events.length > 0 && events[0].address.location !== undefined){
-        address = events[0].address.location.street + ', ' + events[0].address.location.zip;
-        surl = "https://www.google.co.uk/search?q=" + address;
+    if (events.length > 0){
+        try {
+            address = events[0].address.location.street + ', ' + events[0].address.location.zip;
+            surl = "https://www.google.co.uk/search?q=" + address;
+        }
+        catch(error) {
+            //console.error(error);
+            address = "Show address";
+            surl = "https://www.google.co.uk/search?q=" + title;
+        }
     } else {
         address = "Show address";
         surl = "https://www.google.co.uk/search?q=" + title;
@@ -668,3 +675,5 @@ function calExport(name, begin,end) {
     cal.addEvent(name, "...", loc, begin, end);
     cal.download();
 }
+
+
