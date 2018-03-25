@@ -385,7 +385,7 @@ function fillMap(e){
 
                var cali = "calExport($(this).parent().prev().text(),$('h4').text()," + moment(data[i].start_time)+","+moment(data[i].end_time) +");";
                var event_id = '<br><a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'><i class=\'fab fa-facebook-square\'></i> FB event</a>';
-               event_id = event_id + "<br><a href='#' onclick=" + cali + "><i class='fab fa-facebook-square'></i> Add to calendar</a>";
+               event_id = event_id + "<br><a href='#' onclick=" + cali + "><i class='far fa-calendar-plus'></i> Add to calendar</a>";
 
                var x = '$(\'#event_desc_' + i + '\').toggle();';
                var n  = '<div style="font-weight:600;" class="event_names" id="event_name_' + i +
