@@ -245,11 +245,13 @@ function setMarker(title, cat, scat, website, events, location, fb){
         opacity: 1
     });
 
-    var img = "";
+    // streetview
+
+    var img = "<div id=\"street-view\"></div>";
 
     var close = '<a href="#" style="margin-top:-1em;color:black;padding:0 3px;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();"><i class="fas fa-times"></i></a><br>';
-    var header = close + "<div style='background:url( " + img + ")'>";
+    var header = close;
     header = header + "<div style='background:linear-gradient(to right, " + mcolor + "," + mcolor + ");'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
     header = header + cat + " - " + scat + "</h5></div>";
     header = header + "<h4 style='padding-top: 0.4em;padding-left:0.3em; font-weight:normal;'>" + title + "</h4></div>";
@@ -268,12 +270,13 @@ function setMarker(title, cat, scat, website, events, location, fb){
             surl = "https://www.google.co.uk/search?q=" + title;
         }
     } else {
-        address = "Show address";
+        address = "Google Maps";
         surl = "https://www.google.co.uk/search?q=" + title;
     }
     surl = surl + "+aberdeen+uk+address";
 
-    website = "<hr class='style14' style='margin-top:2em;'><p style='margin-top:2em;' align='center'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website&nbsp;&nbsp;</a>";
+    website = "<div id='streetview' style='height: 150px'></div>";
+    website = website + "<hr class='style14' style='margin-top:2em;'><p style='margin-top:2em;' align='center'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website&nbsp;&nbsp;</a>";
     website = website + "<a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbspFacebook&nbsp;&nbsp;</a>";
     website = website + "<a target='_blank' href='" + surl + "'><i class='fas fa-map-marker'></i>&nbsp;"+ address + "</p></div>";
 
@@ -312,6 +315,27 @@ function setMarker(title, cat, scat, website, events, location, fb){
 
         $("#info").ready(function () {
             $(".event_names > svg").css("color", mcolor);
+
+            // streetview
+            var map2 = new google.maps.Map(document.getElementById('streetview'), {
+                center: marker1,
+                zoom: 1,
+                streetViewControl: true
+            });
+            try {
+                var img = new google.maps.StreetViewPanorama(
+                    document.getElementById('streetview'),
+                    {
+                        position: marker1,
+                        zoom: 1,
+                        motionTracking: false
+                    });
+                map2.setStreetView(img);
+            } catch(error) {
+                console.log(error);
+            }
+
+
         });
 
     });

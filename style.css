@@ -136,3 +136,10 @@ hr.style14 {
     background-image: -ms-linear-gradient(left, #fff, #aeadad, #ffffff);
     background-image: -o-linear-gradient(left, #ffffff, #aeadad, #ffffff);
 }
+
+#streetview {
+    margin-top: 2em;
+    -webkit-box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.75);
+}
