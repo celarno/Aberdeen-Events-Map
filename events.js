@@ -380,7 +380,6 @@ function fillMap(e){
                var date = data[i].start_time;
                var address = data[i].place;
                var time = date.substring(11,16);
-               //date = date.substring(0,10);
                date = moment(date);
 
                var cali = "calExport($(this).parent().prev().text(),$('h4').text()," + moment(data[i].start_time)+","+moment(data[i].end_time) +");";
