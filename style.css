@@ -135,10 +135,10 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 hr.style14 {
     border: 0;
     height: 1px;
-    background-image: -webkit-linear-gradient(left, #fff, #aeadad, #fff);
-    background-image: -moz-linear-gradient(left, #fff, #aeadad, #ffffff);
-    background-image: -ms-linear-gradient(left, #fff, #aeadad, #ffffff);
-    background-image: -o-linear-gradient(left, #ffffff, #aeadad, #ffffff);
+    background-image: -webkit-linear-gradient(left, transparent, #aeadad, transparent);
+    background-image: -moz-linear-gradient(left, transparent, #aeadad, transparent);
+    background-image: -ms-linear-gradient(left, transparent, #aeadad, transparent);
+    background-image: -o-linear-gradient(left, transparent, #aeadad, transparent);
 }
 
 #streetview {
