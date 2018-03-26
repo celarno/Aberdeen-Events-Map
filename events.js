@@ -258,8 +258,7 @@ function setMarker(title, cat, scat, website, events, location, fb){
     header = header + "<hr class='style14'><div style='padding:0.5em;'>";
 
     var address = "Google Maps";
-    var surl = "https://www.google.co.uk/search?q=" + title;
-    surl = surl + "+aberdeen+uk+address";
+    var surl = "https://www.google.com/maps/search/" + title + "+aberdeen+uk";
 
     website = "<div id='streetview' style='height: 150px'></div>";
     website = website + "<hr class='style14' style='margin-top:2em;'><p style='margin-top:2em;' align='center'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website&nbsp;&nbsp;</a>";
