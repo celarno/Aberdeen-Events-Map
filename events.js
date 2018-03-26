@@ -252,8 +252,8 @@ function setMarker(title, cat, scat, website, events, location, fb){
     var header = close + "<div style='background:url( " + img + ")'>";
     header = header + "<div style='background:linear-gradient(to right, " + mcolor + "," + mcolor + ");'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
     header = header + cat + " - " + scat + "</h5></div>";
-    header = header + "<h4 style='padding-top: 0.4em;padding-left: 0.3em; font-weight:normal;'>" + title + "</h4></div>";
-    header = header + "<hr class='style14'><div style ='padding: 0.5em 2em;'>";
+    header = header + "<h4 style='padding-top: 0.4em;padding-left:0.3em; font-weight:normal;'>" + title + "</h4></div>";
+    header = header + "<hr class='style14'><div style='padding:0.5em;'>";
 
     var address;
     var surl;
