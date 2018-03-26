@@ -257,22 +257,8 @@ function setMarker(title, cat, scat, website, events, location, fb){
     header = header + "<h4 style='padding-top: 0.4em;padding-left:0.3em; font-weight:normal;'>" + title + "</h4></div>";
     header = header + "<hr class='style14'><div style='padding:0.5em;'>";
 
-    var address;
-    var surl;
-    if (events.length > 0){
-        try {
-            address = events[0].address.location.street + ', ' + events[0].address.location.zip;
-            surl = "https://www.google.co.uk/search?q=" + address;
-        }
-        catch(error) {
-            //console.error(error);
-            address = "Show address";
-            surl = "https://www.google.co.uk/search?q=" + title;
-        }
-    } else {
-        address = "Google Maps";
-        surl = "https://www.google.co.uk/search?q=" + title;
-    }
+    var address = "Google Maps";
+    var surl = "https://www.google.co.uk/search?q=" + title;
     surl = surl + "+aberdeen+uk+address";
 
     website = "<div id='streetview' style='height: 150px'></div>";
