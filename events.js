@@ -302,6 +302,7 @@ function setMarker(title, cat, scat, website, events, location, fb){
         }
 
         $("#info").ready(function () {
+
             $(".event_names > svg").css("color", mcolor);
 
             // streetview
