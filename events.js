@@ -592,7 +592,8 @@ function pinSymbol(color,size) {
 }
 
 function colorCat(a,color){
-    $("a:contains(" + a + ")").css("border-bottom", "solid " + color);
+    //$("#" + a).css("border-bottom", "solid " + color);
+    $("#" + a + " > svg").css('color', color);
 }
 
 function daterange(){
