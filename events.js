@@ -223,12 +223,15 @@ function setMarker(title, cat, scat, website, events, location, fb){
     fb = "https://www.facebook.com" + fb.slice(0,-6);
 
     var mcolor = "white";
-    if(cat === "Entertainment") {   mcolor = 'rgb(255, 91, 73)';}
-    if(cat === "Dining") {          mcolor = 'rgb(214, 126, 252)';}
-    if(cat === "Accommodation") {   mcolor = 'rgb(216, 198, 69)';}
-    if(cat === "Sports") {          mcolor = 'rgb(247, 134, 74)';}
-    if(cat === "Culture") {         mcolor = 'rgb(135, 209, 138)';}
-    if(cat === "Professional") {    mcolor = 'rgb(149, 153, 150)';}
+    var icon;
+    if(cat === "Entertainment") {   mcolor = 'rgb(255, 91, 73)';    icon = "fas fa-music";}
+    if(cat === "Dining") {          mcolor = 'rgb(214, 126, 252)';  icon = "fas fa-utensils";}
+    if(cat === "Accommodation") {   mcolor = 'rgb(216, 198, 69)';   icon = "fas fa-bed";}
+    if(cat === "Sports") {          mcolor = 'rgb(247, 134, 74)';   icon = "fas fa-basketball-ball";}
+    if(cat === "Culture") {         mcolor = 'rgb(135, 209, 138)';  icon = "fas fa-university";}
+    if(cat === "Professional") {    mcolor = 'rgb(149, 153, 150)';  icon = "fas fa-briefcase";}
+
+    icon = "<i class='"+ icon + "'></i>&nbsp;&nbsp;&nbsp;";
 
     colorCat(cat,mcolor);
 
@@ -253,13 +256,12 @@ function setMarker(title, cat, scat, website, events, location, fb){
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();"><i class="fas fa-times"></i></a><br>';
     var header = close;
     header = header + "<div style='background:linear-gradient(to right, " + mcolor + "," + mcolor + ");'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
-    header = header + cat + " - " + scat + "</h5></div>";
+    header = header + icon + cat + " - " + scat + "</h5></div>";
     header = header + "<h4 style='padding-top: 0.4em;padding-left:0.3em; font-weight:normal;'>" + title + "</h4></div>";
     header = header + "<hr class='style14'><div style='padding:0.5em;'>";
 
     var address = "Google Maps";
-    var surl = "https://www.google.co.uk/search?q=" + title;
-    surl = surl + "+aberdeen+uk+address";
+    var surl = "https://www.google.com/maps/search/" + title + "+aberdeen+uk";
 
     website = "<div id='streetview' style='height: 150px'></div>";
     website = website + "<hr class='style14' style='margin-top:2em;'><p style='margin-top:2em;' align='center'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website&nbsp;&nbsp;</a>";
@@ -588,8 +590,8 @@ function pinSymbol(color,size) {
     };
 }
 
-function colorCat(a,b){
-    $("a:contains(" + a + ")").css("border-bottom", "solid " + b);
+function colorCat(a,color){
+    $("a:contains(" + a + ")").css("border-bottom", "solid " + color);
 }
 
 function daterange(){
@@ -600,7 +602,7 @@ function daterange(){
         startDate: start,
         endDate: end,
         locale: {
-            "format": "DD/MM/YYYY",
+            "format": "DD/MM/YY",
             "separator": " - ",
             "applyLabel": "Apply",
             "cancelLabel": "Cancel",
@@ -633,7 +635,7 @@ function daterange(){
 }
 
 function cb(start, end) {
-    $('#reportrange').find('span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+    $('#reportrange').find('span').html(start.format('D/M') + ' - ' + end.format('D/M/YYYY'));
     $("#info").hide();
     filterDates(start,end);
 }
