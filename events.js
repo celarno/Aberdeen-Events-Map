@@ -535,7 +535,7 @@ function mySearch(){
 
     $("#info").hide();
     $("#clear").show();
-    $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
+    //$("a.nav-link.dropdown-toggle").css("font-weight", "normal");
 
     var keyword = document.getElementById('search_box').value.toLowerCase();
     for (var i = 0; i < markers.length; i++) {
