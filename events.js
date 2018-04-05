@@ -302,6 +302,7 @@ function setMarker(title, cat, scat, website, events, location, fb){
         }
 
         $("#info").ready(function () {
+
             $(".event_names > svg").css("color", mcolor);
 
             // streetview
@@ -535,7 +536,7 @@ function mySearch(){
 
     $("#info").hide();
     $("#clear").show();
-    $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
+    //$("a.nav-link.dropdown-toggle").css("font-weight", "normal");
 
     var keyword = document.getElementById('search_box').value.toLowerCase();
     for (var i = 0; i < markers.length; i++) {
@@ -591,7 +592,8 @@ function pinSymbol(color,size) {
 }
 
 function colorCat(a,color){
-    $("a:contains(" + a + ")").css("border-bottom", "solid " + color);
+    //$("#" + a).css("border-bottom", "solid " + color);
+    $("#" + a + " > svg").css('color', color);
 }
 
 function daterange(){
