@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Location</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+
+        $(document).ready(function () {
+
+        function validateUrl(value) {
+            return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(value);
+        }
+
+        var Accommodation   = ['Hotels', 'B&B'];
+        var Culture         = ['Sights', 'Theatre', 'Castles', 'Museums', 'Art galleries', 'Faith'];
+        var Dining          = ['Takeaway', 'Pubs', 'Cafes/Coffee shops', 'Italian', 'Indian', 'Chinese'];
+        var Entertainment   = ['Theme Parks', 'Music', 'Comedy', 'Nightlife', 'Libraries', 'Cinema', 'Kids and family'];
+        var Professional    = ['University', 'Banks', 'Solicitors', 'Schools'];
+        var Sports          = ['Running', 'Gyms', 'Swimming Pools', 'Sport centres', 'Stadium'];
+
+        $("#cat").change(function () {
+                var subcats;
+                var str = $("#cat option:selected").text();
+
+                switch (str){
+                    case 'Accommodation':
+                        subcats = Accommodation;break;
+                    case 'Culture':
+                        subcats = Culture;break;
+                    case 'Dining':
+                        subcats = Dining;break;
+                    case 'Entertainment':
+                        subcats= Entertainment;break;
+                    case 'Professional':
+                        subcats=Professional;break;
+                    case 'Sports':
+                        subcats=Sports;break;
+                }
+
+                $('#subcat option').each(function() {
+                    $(this).remove();
+                });
+
+                subcats.forEach( function(s){
+                    $('#subcat').append($('<option>', {
+                        value: s,
+                        text: s
+                    }));
+                });
+
+            }).change();
+
+        });
+
+    </script>
+</head>
+
+<body>
+<div style="padding: 2em">
+<form>
+    <div class="form-group row">
+        <label for="location_name" class="col-4 col-form-label">Location name</label>
+        <div class="col-8">
+            <input id="location_name" name="location_name" class="form-control here" required="required" type="text">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="cat" class="col-4 col-form-label">Category</label>
+        <div class="col-8">
+            <select id="cat" name="cat" class="custom-select" required="required">
+                <option></option>
+                <option>Accommodation</option>
+                <option>Culture</option>
+                <option>Dining</option>
+                <option>Entertainment</option>
+                <option>Professional</option>
+                <option>Sports</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="subcat" class="col-4 col-form-label">Subcategory</label>
+        <div class="col-8">
+            <select id="subcat" name="subcat" class="custom-select" required="required">
+
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="website" class="col-4 col-form-label">Website</label>
+        <div class="col-8">
+            <input id="website" name="website" aria-describedby="websiteHelpBlock" required="required" class="form-control here" type="text">
+            <span id="websiteHelpBlock" class="form-text text-muted">e.g. https://www.yourfavoriteplace.com</span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="facebook" class="col-4 col-form-label">Facebook</label>
+        <div class="col-8">
+            <div class="input-group">
+                <input id="facebook" name="facebook" aria-describedby="facebookHelpBlock" required="required" class="form-control here" type="text">
+                <div class="input-group-addon append">/events</div>
+            </div>
+            <span id="facebookHelpBlock" class="form-text text-muted">e.g. https://www.facebook.com/yourfavoriteplace</span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="offset-4 col-8">
+            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+</div>
+</body>
+</html>
