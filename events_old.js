@@ -1,12 +1,11 @@
 var lati, long;
 var map;
-var data = [];
+var data;
 var events;
 var entries;
 var marker;
 var markers = [];
 var today = moment();
-var test;
 
 var style = [
     {
@@ -203,11 +202,7 @@ var style = [
 ];
 
 function main(){
-    $.getJSON( "fb_events.json", function(d){
-        data = d;
-        //console.log(data);
-    });
-
+    fb_start();
     initMap();
     getData();
 }
@@ -273,14 +268,22 @@ function setMarker(title, cat, scat, website, events, location, fb){
     website = website + "<a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbspFacebook&nbsp;&nbsp;</a>";
     website = website + "<a target='_blank' href='" + surl + "'><i class='fas fa-map-marker'></i>&nbsp;"+ address + "</p></div>";
 
+    /*var search = title + ", Aberdeen, UK";
+    var photos = [];
+    getPhotos(search, function(p) {
+        $(p).each(function(){
+            photos.push(this);
+        });
+    });*/
+
     marker.addListener('click', function () {
 
         var e = [];
         $(events).each(function() {
-            var dt = "<div class='event_names'><i class=\"fas fa-caret-right\"></i> <font color='#565656'>" + this.date + "</font><h6>"+this.n+"</h6></div>";
-            e.push(dt);
+            var dt = "<font color='#565656'>" + this.date.format("DD/MM/YYYY") + " - " + this.time + "</font>";
+            e.push([dt, this.n, this.desc].join(""));
         });
-        e = "<div> " + e.join('<br>') + "</div>";
+        e = e.join('<br>');
 
         $("#info").html('<div style="position:relative;" id="infobox_content">' + header + e + website).show();
 
@@ -294,6 +297,8 @@ function setMarker(title, cat, scat, website, events, location, fb){
             var h = ($(document).height() - $(".navi").height())/100;
             h = h * 100;
             $("#info").css("height", h);
+            //$("#info").css("right", "5%");
+            //$("#info").css("bottom", "10%");
         }
 
         $("#info").ready(function () {
@@ -330,6 +335,28 @@ function setMarker(title, cat, scat, website, events, location, fb){
 
 }
 
+function fb_start() {
+    FB.init({
+        appId: '541885672846625',
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v2.12'
+    });
+    //console.log('fb initialized ...');
+}
+
+var fb_events = function(page, callback){
+    var token = '541885672846625|L29fSufvR0PLhEv2XI9DL76HdqM';
+    var token = 'EAAHs15cJ9SEBAEF3zu4XdbNZCx2ZCZB6AmsEeEaZAOUirk6Gy9yvLgT9QrygEZB5S2wrnNyB1v9nbV8BBzn7dXFh792HZBmCAsQE3VEYs2RKScawIFL7MZCPEc8KngAtwqEHKDiDRKSpTpZAWCuoAJbLAhTngDYIRUSaCLZA0mvljQQZDZD';
+
+    FB.api(page, 'GET', {access_token: token},
+        function(response) {
+            if (response.data) {
+                data = response.data;
+                callback(data.slice(0,5)); // just take first 5 events
+            } else { console.log(page, "no events!",response); }
+        });
+};
 
 function getData(){
     var spreadsheetID = "1laOX2_2aeSDz3H8lP7U8W_ohgeK39Ye1J3X-Q-_hsDU";
@@ -348,7 +375,6 @@ function getData(){
 }
 
 function fillMap(e){
-
     $(e).each(function(){
        var t = new URL(this.gsx$facebook.$t).pathname;
        this.gsx$facebook.$t = t + 'events';
@@ -360,26 +386,35 @@ function fillMap(e){
        var scat = this.gsx$subcat.$t;
        var website = this.gsx$website.$t;
 
-       $(data).each(function(){
-            if(this.name===title){
-                var events = [];
-                console.log(this.name);
-                $(this.events).each(function(){
-                    var date = this.date;
-                    var address = this.location;
-                    var title = this.title;
-                    var desc1 = "test test test test";
+       fb_events(fb, function(data) {
+           var events = [];
+           var i = 0;
+           $(data).each(function(){
+               var date = data[i].start_time;
+               var address = data[i].place;
+               var time = date.substring(11,16);
+               date = moment(date);
 
-                    if(moment(date) < today){
-                        // nothing
-                    } else {
-                        var test = new event(date, title, desc1, address);
-                        events.push(test);
-                    }
-                });
+               var cali = "calExport($(this).parent().prev().text(),$('h4').text()," + moment(data[i].start_time)+","+moment(data[i].end_time) +");";
+               var event_id = '<br><a target=\'_blank\' href=\'https://www.facebook.com/events/' + data[i].id + '\'><i class=\'fab fa-facebook-square\'></i> FB event</a>';
+               event_id = event_id + "<br><a href='#' onclick=" + cali + "><i class='far fa-calendar-plus'></i> Add to calendar</a>";
 
-                setMarker(title, cat, scat, website, events, loc, fb);
-            }
+               var x = '$(\'#event_desc_' + i + '\').toggle();';
+               var n  = '<div style="font-weight:600;" class="event_names" id="event_name_' + i +
+                   '" onclick="' + x + '"><i class="fas fa-caret-right"></i> ' + data[i].name + '</div>';
+               var desc = '<div id="event_desc_' + i + '" class="event_desc" style="display:none;text-align: left;">' + data[i].description + '' +
+                   '<br>' + event_id + '</div>';
+
+               if(date < today){
+                   // nothing
+               } else {
+                   var test = new event(date, time, n, desc, address);
+                   events.push(test);
+               }
+               i++;
+           });
+           setMarker(title, cat, scat, website, events, loc, fb);
+
        });
     });
 }
@@ -457,7 +492,7 @@ function filterDates(start, end){
     for (var i = 0; i < markers.length; i++) {
         if(markers[i].events.length > 0 && checkFilter(i)){
             $(markers[i].events).each(function () {
-                var d = moment(this.date);
+                var d = this.date;
                 if(d >= start && d <= end){
                     markers[i].marker.setVisible(true);
                     $("#clear").show();
@@ -516,8 +551,9 @@ function createMarkers(category, subcategory, marker, events) {
     this.events = events;
 }
 
-function event(date, n, desc, address){
+function event(date, time, n, desc, address){
     this.date = date;
+    this.time = time;
     this.n = n;
     this.desc = desc;
     this.address = address;
@@ -682,4 +718,8 @@ function calExport(name, loc, begin, end) {
 
 function clean(str) {
     return str.replace(/[^0-9a-z-A-Z ]/g, "").replace(/ +/, " ")
+}
+
+function validateUrl(value) {
+    return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(value);
 }
