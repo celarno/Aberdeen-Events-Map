@@ -205,7 +205,6 @@ var style = [
 function main(){
     $.getJSON( "fb_events.json", function(d){
         data = d;
-        //console.log(data);
     });
 
     initMap();
@@ -218,12 +217,9 @@ function initMap() {
         zoom: 13,
         styles: style
     });
-    //console.log('map loaded ... ');
 }
 
 function setMarker(title, cat, scat, website, events, location, fb){
-    //console.log('setting marker ...');
-
     var url = website;
     fb = "https://www.facebook.com" + fb.slice(0,-6);
 
@@ -363,7 +359,6 @@ function fillMap(e){
        $(data).each(function(){
             if(this.name===title){
                 var events = [];
-                console.log(this.name);
                 $(this.events).each(function(){
                     var date = this.date;
                     var address = this.location;
