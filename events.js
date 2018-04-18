@@ -678,3 +678,25 @@ function calExport(name, loc, begin, end) {
 function clean(str) {
     return str.replace(/[^0-9a-z-A-Z ]/g, "").replace(/ +/, " ")
 }
+
+
+function addLocation(){
+    var spreadsheetID = "1laOX2_2aeSDz3H8lP7U8W_ohgeK39Ye1J3X-Q-_hsDU";
+    var values = [
+        [
+            // Cell values ...
+        ]
+    ];
+    var body = {
+        values: values
+    };
+    gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: spreadsheetID,
+        range: "A2:F2",
+        valueInputOption: "USER_ENTERED",
+        resource: body
+    }).then((response) => {
+        var result = response.result;
+        console.log('${result.updates.updatedCells} cells appended.')
+    });
+}
