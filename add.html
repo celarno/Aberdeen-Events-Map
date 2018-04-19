@@ -18,6 +18,59 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
 </head>
 <body>
+<div id="add">
+    <h4>Add Location</h4>
+    <br>
+    <form id="add_form">
+        <div class="form-group row">
+            <label for="location_name" class="col-4 col-form-label">Location name</label>
+            <div class="col-8">
+                <input id="location_name" name="location_name" class="form-control here" required="required" type="text">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="cat" class="col-4 col-form-label">Category</label>
+            <div class="col-8">
+                <select id="cat" name="cat" class="custom-select" required="required">
+                    <option></option>
+                    <option>Accommodation</option>
+                    <option>Culture</option>
+                    <option>Dining</option>
+                    <option>Entertainment</option>
+                    <option>Professional</option>
+                    <option>Sports</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="subcat" class="col-4 col-form-label">Subcategory</label>
+            <div class="col-8">
+                <select id="subcat" name="subcat" class="custom-select" required="required">
+                    <option></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="website" class="col-4 col-form-label">Website</label>
+            <div class="col-8">
+                <input id="website" name="website" aria-describedby="websiteHelpBlock" required="required" class="form-control here" type="url">
+                <span id="websiteHelpBlock" class="form-text text-muted">e.g. https://www.yourfavoriteplace.com</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="facebook" class="col-4 col-form-label">Facebook</label>
+            <div class="col-8">
+                <input id="facebook" name="facebook" aria-describedby="facebookHelpBlock" required="required" class="form-control here" type="url">
+                <span id="facebookHelpBlock" class="form-text text-muted">e.g. https://www.facebook.com/yourfavoriteplace</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-4 col-8">
+                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
 <script>
     var valueRangeBody;
     $(document).ready(function () {
@@ -103,60 +156,5 @@
 </script>
 <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
-
-
-<div id="add">
-<h4>Add Location</h4>
-<br>
-<form id="add_form">
-    <div class="form-group row">
-    <label for="location_name" class="col-4 col-form-label">Location name</label>
-<div class="col-8">
-    <input id="location_name" name="location_name" class="form-control here" required="required" type="text">
-    </div>
-    </div>
-    <div class="form-group row">
-    <label for="cat" class="col-4 col-form-label">Category</label>
-    <div class="col-8">
-    <select id="cat" name="cat" class="custom-select" required="required">
-    <option></option>
-    <option>Accommodation</option>
-    <option>Culture</option>
-    <option>Dining</option>
-    <option>Entertainment</option>
-    <option>Professional</option>
-    <option>Sports</option>
-    </select>
-    </div>
-    </div>
-    <div class="form-group row">
-    <label for="subcat" class="col-4 col-form-label">Subcategory</label>
-    <div class="col-8">
-    <select id="subcat" name="subcat" class="custom-select" required="required">
-    <option></option>
-    </select>
-    </div>
-    </div>
-    <div class="form-group row">
-    <label for="website" class="col-4 col-form-label">Website</label>
-    <div class="col-8">
-    <input id="website" name="website" aria-describedby="websiteHelpBlock" required="required" class="form-control here" type="url">
-    <span id="websiteHelpBlock" class="form-text text-muted">e.g. https://www.yourfavoriteplace.com</span>
-</div>
-</div>
-<div class="form-group row">
-    <label for="facebook" class="col-4 col-form-label">Facebook</label>
-    <div class="col-8">
-    <input id="facebook" name="facebook" aria-describedby="facebookHelpBlock" required="required" class="form-control here" type="url">
-    <span id="facebookHelpBlock" class="form-text text-muted">e.g. https://www.facebook.com/yourfavoriteplace</span>
-</div>
-</div>
-<div class="form-group row">
-    <div class="offset-4 col-8">
-    <button name="submit" type="submit" class="btn btn-primary">Submit</button>
-    </div>
-    </div>
-    </form>
-    </div>
 </body>
 </html>
