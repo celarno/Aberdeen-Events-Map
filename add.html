@@ -76,9 +76,10 @@
     $(document).ready(function () {
         $("#add_form").submit(function (a) {
             a.preventDefault();
+            var formula = '';
             valueRangeBody = {
                 "values": [
-                    [$('#location_name').val(),$('#cat').val(),$('#subcat').val(),$('#website').val(),$('#facebook').val()]
+                    [$('#location_name').val(),$('#cat').val(),$('#subcat').val(),$('#website').val(),$('#facebook').val(),formula]
                 ]
             };
             makeApiCall();
