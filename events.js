@@ -440,10 +440,6 @@ $(document).ready(function () {
 
     }).change();
 
-    $("#add_form").submit(function (a) {
-        a.preventDefault();
-    });
-
 });
 
 
