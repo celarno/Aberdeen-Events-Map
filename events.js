@@ -396,7 +396,7 @@ $(document).ready(function () {
         filterMap(id);
     });
 
-    $("a.nav-link.dropdown-toggle").click(function() {
+    $(".nav-link").click(function() {
         var id = $(this).text();
         $(this).css("font-weight", "bold");
         filterMap(id);
@@ -467,9 +467,9 @@ function filterDates(start, end){
 function filterMap(id) {
     $("#clear").show();
     $("#info").hide();
-    $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
 
     if (id === "clear") {
+        $(".nav-link").css("font-weight", "normal");
         $('#search_box').val("");
         $("#clear").hide();
         cb(moment(), moment());
@@ -494,7 +494,7 @@ function filterMap(id) {
             continue;
         }
 
-        if (( cat !== id || subcat !== id) && cf === true) {
+        if (( cat !== id && subcat !== id) && cf === true) {
             markers[i].marker.setVisible(false);
         }
     }
