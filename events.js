@@ -524,7 +524,7 @@ function mySearch(){
     for (var i = 0; i < markers.length; i++) {
         if(markers[i].events.length > 0 && checkFilter(i)){
             $(markers[i].events).each(function(){
-                var test = this.n + markers[i].marker.title + this.desc;
+                var test = this.n + markers[i].marker.title;
                 test = strip(test).toLowerCase().replace(/[^\w\s]/gi, '').trim();
                 if(test.indexOf(keyword) !== -1){
                     markers[i].marker.setVisible(true);
@@ -673,26 +673,4 @@ function calExport(name, loc, begin, end) {
 
 function clean(str) {
     return str.replace(/[^0-9a-z-A-Z ]/g, "").replace(/ +/, " ")
-}
-
-
-function addLocation(){
-    var spreadsheetID = "1laOX2_2aeSDz3H8lP7U8W_ohgeK39Ye1J3X-Q-_hsDU";
-    var values = [
-        [
-            // Cell values ...
-        ]
-    ];
-    var body = {
-        values: values
-    };
-    gapi.client.sheets.spreadsheets.values.append({
-        spreadsheetId: spreadsheetID,
-        range: "A2:F2",
-        valueInputOption: "USER_ENTERED",
-        resource: body
-    }).then((response) => {
-        var result = response.result;
-        console.log('${result.updates.updatedCells} cells appended.')
-    });
 }
