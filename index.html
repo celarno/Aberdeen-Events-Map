@@ -181,7 +181,7 @@
         $("#add_form").submit(function (a) {
             a.preventDefault();
             if(gapi.auth2.getAuthInstance().isSignedIn.get()){
-                var formula = '';
+                var formula = '=IFERROR(IF(ISBLANK(INDIRECT("R[0]C[-1]", false)),"",getGeo(SUBSTITUTE(INDIRECT("R[0]C[-3]", false),"\'","")&", Aberdeen, UK")),"")';
                 valueRangeBody = {
                     "values": [
                         [$('#location_name').val(),$('#cat').val(),$('#subcat').val(),$('#website').val(),$('#facebook').val(),formula]
@@ -215,7 +215,7 @@
         request.then(function(response) {
             // TODO: Change code below to process the `response` object:
             console.log(response.result);
-            console.log(response.result.tableRange);
+            // console.log(response.result.tableRange);
         }, function(reason) {
             console.error('error: ' + reason.result.error.message);
         });
