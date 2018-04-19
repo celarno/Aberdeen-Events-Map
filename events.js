@@ -396,8 +396,10 @@ $(document).ready(function () {
 
     $(".nav-link").click(function() {
         var id = $.trim($(this).text());
-        $(this).css("font-weight", "bold");
-        filterMap(id);
+        if($(this).find('div').attr("id") !== "reportrange"){
+            $(this).css("font-weight", "bold");
+            filterMap(id);
+        }
     });
 
     $(".dropdown-item").click(function() {
@@ -412,7 +414,7 @@ $(document).ready(function () {
         $('.navbar-collapse').collapse('hide');
     });
 
-    daterange();
+    //daterange();
 
     $("#cat").change(function () {
         var subcats = [];
@@ -445,7 +447,7 @@ function filterDates(start, end){
 
     for (var i = 0; i < markers.length; i++) {
         //console.log(markers[i].events.length > 0 && checkFilter(i));
-        if(markers[i].events.length > 0){
+        if(markers[i].events.length > 0 && checkFilter(i)){
             $(markers[i].events).each(function () {
                 var d = moment(this.date);
                 if(d >= start && d <= end){
