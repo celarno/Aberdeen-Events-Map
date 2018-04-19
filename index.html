@@ -184,10 +184,14 @@
                 var formula = '=IFERROR(IF(ISBLANK(INDIRECT("R[0]C[-1]", false)),"",getGeo(SUBSTITUTE(INDIRECT("R[0]C[-3]", false),"\'","")&", Aberdeen, UK")),"")';
                 valueRangeBody = {
                     "values": [
-                        [$('#location_name').val(),$('#cat').val(),$('#subcat').val(),$('#website').val(),$('#facebook').val(),formula]
+                        [$('#cat').val(),$('#subcat').val(),$('#location_name').val(),$('#website').val(),$('#facebook').val(),formula]
                     ]
                 };
                 makeApiCall();
+                alert("Categories successfully updated!");
+                $('#add_form').each(function(){
+                    this.reset();
+                });
             } else {
                 alert("You need to sign in first.");
             }
