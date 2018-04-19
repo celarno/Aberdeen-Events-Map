@@ -251,8 +251,6 @@ function setMarker(title, cat, scat, website, events, location, fb){
 
     // streetview
 
-    var img = "<div id=\"street-view\"></div>";
-
     var close = '<a href="#" style="margin-top:-1em;color:black;padding:0 3px;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();"><i class="fas fa-times"></i></a><br>';
     var header = close;
@@ -446,7 +444,8 @@ $(document).ready(function () {
 function filterDates(start, end){
 
     for (var i = 0; i < markers.length; i++) {
-        if(markers[i].events.length > 0 && checkFilter(i)){
+        //console.log(markers[i].events.length > 0 && checkFilter(i));
+        if(markers[i].events.length > 0){
             $(markers[i].events).each(function () {
                 var d = moment(this.date);
                 if(d >= start && d <= end){
@@ -622,7 +621,9 @@ function daterange(){
 function cb(start, end) {
     $('#reportrange').find('span').html(start.format('D/M') + ' - ' + end.format('D/M/YYYY'));
     $("#info").hide();
+    //alert(start+"-"+end);
     filterDates(start,end);
+
 }
 
 /*
