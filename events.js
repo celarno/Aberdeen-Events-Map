@@ -397,7 +397,7 @@ $(document).ready(function () {
     });
 
     $(".nav-link").click(function() {
-        var id = $(this).text();
+        var id = $.trim($(this).text());
         $(this).css("font-weight", "bold");
         filterMap(id);
     });
@@ -468,8 +468,9 @@ function filterMap(id) {
     $("#clear").show();
     $("#info").hide();
 
+    $(".nav-link").css("font-weight", "normal");
+
     if (id === "clear") {
-        $(".nav-link").css("font-weight", "normal");
         $('#search_box').val("");
         $("#clear").hide();
         cb(moment(), moment());
