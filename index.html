@@ -180,13 +180,17 @@
     $(document).ready(function () {
         $("#add_form").submit(function (a) {
             a.preventDefault();
-            var formula = '';
-            valueRangeBody = {
-                "values": [
-                    [$('#location_name').val(),$('#cat').val(),$('#subcat').val(),$('#website').val(),$('#facebook').val(),formula]
-                ]
-            };
-            makeApiCall();
+            if(gapi.auth2.getAuthInstance().isSignedIn.get()){
+                var formula = '';
+                valueRangeBody = {
+                    "values": [
+                        [$('#location_name').val(),$('#cat').val(),$('#subcat').val(),$('#website').val(),$('#facebook').val(),formula]
+                    ]
+                };
+                makeApiCall();
+            } else {
+                alert("You need to sign in first.");
+            }
         });
     });
 
@@ -244,6 +248,7 @@
     function updateSignInStatus(isSignedIn) {
         if (isSignedIn) {
             //makeApiCall();
+            console.log("Signed in");
         }
     }
 
