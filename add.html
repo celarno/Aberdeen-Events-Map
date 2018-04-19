@@ -1,18 +1,79 @@
+<!DOCTYPE html>
 <html>
-<head></head>
+<head>
+</head>
 <body>
-<!--
-BEFORE RUNNING:
----------------
-1. If not already done, enable the Google Sheets API
-   and check the quota for your project at
-   https://console.developers.google.com/apis/api/sheets
-2. Get access keys for your application. See
-   https://developers.google.com/api-client-library/javascript/start/start-js#get-access-keys-for-your-application
-3. For additional information on authentication, see
-   https://developers.google.com/sheets/api/quickstart/js#step_2_set_up_the_sample
--->
+<div style="max-width: 60%;padding:1em;">
+    <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
+    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
+    <h4>Add Location</h4>
+    <br>
+    <form id="add_form">
+        <div class="form-group row">
+            <label for="location_name" class="col-4 col-form-label">Location name</label>
+            <div class="col-8">
+                <input id="location_name" name="location_name" class="form-control here" required="required" type="text">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="cat" class="col-4 col-form-label">Category</label>
+            <div class="col-8">
+                <select id="cat" name="cat" class="custom-select" required="required">
+                    <option></option>
+                    <option>Accommodation</option>
+                    <option>Culture</option>
+                    <option>Dining</option>
+                    <option>Entertainment</option>
+                    <option>Professional</option>
+                    <option>Sports</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="subcat" class="col-4 col-form-label">Subcategory</label>
+            <div class="col-8">
+                <select id="subcat" name="subcat" class="custom-select" required="required">
+                    <option>TEST_SUBCAT</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="website" class="col-4 col-form-label">Website</label>
+            <div class="col-8">
+                <input id="website" name="website" aria-describedby="websiteHelpBlock" required="required" class="form-control here" type="url">
+                <span id="websiteHelpBlock" class="form-text text-muted">e.g. https://www.yourfavoriteplace.com</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="facebook" class="col-4 col-form-label">Facebook</label>
+            <div class="col-8">
+                <input id="facebook" name="facebook" aria-describedby="facebookHelpBlock" required="required" class="form-control here" type="url">
+                <span id="facebookHelpBlock" class="form-text text-muted">e.g. https://www.facebook.com/yourfavoriteplace</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-4 col-8">
+                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
 <script>
+    var valueRangeBody;
+    $(document).ready(function () {
+        $("#add_form").submit(function (a) {
+            a.preventDefault();
+            var formula = '';
+            valueRangeBody = {
+                "values": [
+                    [$('#location_name').val(),$('#cat').val(),$('#subcat').val(),$('#website').val(),$('#facebook').val(),formula]
+                ]
+            };
+            makeApiCall();
+        });
+    });
+
+
     function makeApiCall() {
         var params = {
             // The ID of the spreadsheet to update.
@@ -27,13 +88,6 @@ BEFORE RUNNING:
 
             // How the input data should be inserted.
             insertDataOption: 'INSERT_ROWS' // TODO: Update placeholder value.
-        };
-
-        var valueRangeBody = {
-            "values": [
-                ["test"],["test"]
-            ]
-            // TODO: Add desired properties to the request body.
         };
 
         var request = gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
@@ -72,7 +126,7 @@ BEFORE RUNNING:
 
     function updateSignInStatus(isSignedIn) {
         if (isSignedIn) {
-            makeApiCall();
+            //makeApiCall();
         }
     }
 
@@ -88,7 +142,5 @@ BEFORE RUNNING:
         onload="this.onload=function(){};handleClientLoad()"
         onreadystatechange="if (this.readyState === 'complete') this.onload()">
 </script>
-<button id="signin-button" onclick="handleSignInClick()">Sign in</button>
-    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
 </body>
 </html>
