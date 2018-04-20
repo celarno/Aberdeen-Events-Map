@@ -157,6 +157,7 @@ hr.style14 {
     display: none !important;
 }
 
+
 #add, #rating {
     width: 40%;
     position: absolute;
@@ -178,4 +179,12 @@ hr.style14 {
 .col-form-label {
     text-align: right;
     max-width: 27% !important;
+}
+
+#change_rating table tr {
+    padding:0.5em;
+}
+
+#rating {
+    width: 30% !important;
 }
