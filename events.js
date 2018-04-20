@@ -286,7 +286,8 @@ function setMarker(title, cat, scat, website, events, location, fb, rating){
 
         var e = [];
         $(events).each(function() {
-            var dt = "<div class='event_names'><i class=\"fas fa-caret-right\"></i> <font color='#565656'>" + moment(this.date).format("DD/MM/YYYY") + "</font><h6>"+this.n+"</h6></div>";
+            var event_link = "<a target='_blank' href='https://www.google.co.uk/search?q=" + this.n+"+" + title + "'>" + this.n + "</a>";
+            var dt = "<div class='event_names'><i class=\"fas fa-caret-right\"></i> <font color='#565656'>" + moment(this.date).format("DD/MM/YYYY") + "</font><h6>" + event_link + "</h6></div>";
             e.push(dt);
         });
         e = "<div> " + e.join('<br>') + "</div>";
