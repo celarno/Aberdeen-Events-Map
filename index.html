@@ -233,7 +233,7 @@
                     this.reset();
                 });
                 $('#subcat').val("");
-                $('#add').toggle("");
+                $('#add').toggle();
 
             } else {
                 alert("You need to sign in first.");
@@ -258,12 +258,13 @@
                 $('#change_rating').each(function(){
                     this.reset();
                 });
-                $('#rating').toggle("");
+                $('#rating').toggle();
 
             } else {
                 alert("You need to sign in first.");
             }
         });
+
     });
 
 
