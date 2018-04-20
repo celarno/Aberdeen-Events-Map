@@ -157,7 +157,7 @@ hr.style14 {
     display: none !important;
 }
 
-#add {
+#add, #rating {
     width: 40%;
     position: absolute;
     padding: 2em;

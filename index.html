@@ -175,6 +175,44 @@
         </div>
     </form>
 </div>
+
+<div id="rating">
+    <a href="#" style="margin-top:-1em;color:black;padding:0 3px;text-decoration:none;float:right;" onclick="$('#rating').hide();"><i class="fas fa-times"></i></a><br>
+    <button id="signin-button2" onclick="handleSignInClick()">Sign in</button>
+    <button id="signout-button2" onclick="handleSignOutClick()">Sign out</button><BR><BR>
+    <h4>Rate Location</h4>
+    <br>
+    <form id="change_rating">
+        <div class="form-group row">
+            <label for="rating_name" class="col-4 col-form-label">Location name</label>
+            <div class="col-8">
+                <span id="rating_name"></span>
+            </div>
+            <label for="rating_score" class="control-label col-xs-4">Rating</label>
+            <div class="col-xs-8">
+                <label class="radio-inline">
+                    <input type="radio" name="rating_score" value="1">
+                    <i class="fas fa-star"></i>
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="rating_score" value="2">
+                    <i class="fas fa-star"></i><i class="fas fa-star">
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="rating_score" value="3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star">
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-4 col-8" style="text-align: right;">
+                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
 <script>
     var valueRangeBody;
     $(document).ready(function () {
@@ -183,12 +221,13 @@
             a.preventDefault();
             if(gapi.auth2.getAuthInstance().isSignedIn.get()){
                 var formula = '=IFERROR(IF(ISBLANK(INDIRECT("R[0]C[-1]", false)),"",getGeo(SUBSTITUTE(INDIRECT("R[0]C[-3]", false),"\'","")&", Aberdeen, UK")),"")';
+                var rating = '=IFERROR(AVERAGEIF(Sheet2!$A:$A,INDIRECT("R[0]C[-4]", false),Sheet2!$B:$B),0)';
                 valueRangeBody = {
                     "values": [
-                        [$('#cat').val(),$('#subcat').val(),$('#location_name').val(),$('#website').val(),$('#facebook').val(),formula]
+                        [$('#cat').val(),$('#subcat').val(),$('#location_name').val(),$('#website').val(),$('#facebook').val(),formula,rating]
                     ]
                 };
-                addLocation(1);
+                makeAPIcall(1);
                 alert("Categories successfully updated!");
                 $('#add_form').each(function(){
                     this.reset();
@@ -200,10 +239,35 @@
                 alert("You need to sign in first.");
             }
         });
+
+        $("#change_rating").submit(function(b) {
+            b.preventDefault();
+            if(gapi.auth2.getAuthInstance().isSignedIn.get()){
+                var name = $('#rating_name').val();
+                var rating = $('#rating_score').val();
+                var mail = gapi.auth2.getAuthInstance().currentUser.get().w3.U3;
+                var timestamp = moment();
+
+                valueRangeBody = {
+                    "values": [
+                        [name,rating,mail,timestamp]
+                    ]
+                };
+                makeAPIcall(2);
+                alert("Rating successfully added!");
+                $('#change_rating').each(function(){
+                    this.reset();
+                });
+                $('#rating').toggle("");
+
+            } else {
+                alert("You need to sign in first.");
+            }
+        });
     });
 
 
-    function addLocation(sheet) {
+    function makeAPIcall(sheet) {
 
         var params = {
             // The ID of the spreadsheet to update.
@@ -258,7 +322,7 @@
     function updateSignInStatus(isSignedIn) {
         if (isSignedIn) {
             //makeApiCall();
-            console.log(gapi.auth2.getAuthInstance().currentUser.get().w3.U3);
+            //console.log(gapi.auth2.getAuthInstance().currentUser.get().w3.U3);
             console.log("Signed in");
         }
     }
