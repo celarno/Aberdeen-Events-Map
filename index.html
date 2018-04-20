@@ -257,6 +257,7 @@
     function updateSignInStatus(isSignedIn) {
         if (isSignedIn) {
             //makeApiCall();
+            console.log(GoogleAuth.currentUser.get());
             console.log("Signed in");
         }
     }
