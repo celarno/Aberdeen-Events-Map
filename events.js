@@ -473,7 +473,7 @@ $(document).ready(function () {
         h = h * 100;
         $("#add").css("height", h);
         $("#rating").css("height", h);
-
+        $("#rating").css("top", "5em");
     }
 
 });
