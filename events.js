@@ -219,7 +219,7 @@ function initMap() {
     });
 }
 
-function setMarker(title, cat, scat, website, events, location, fb){
+function setMarker(title, cat, scat, website, events, location, fb, rating){
     var url = website;
     fb = "https://www.facebook.com" + fb.slice(0,-6);
 
@@ -249,22 +249,33 @@ function setMarker(title, cat, scat, website, events, location, fb){
         opacity: 1
     });
 
-    // streetview
+    var stars="";
+    if(rating==0){
+        stars = '<i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
+    } else if(rating==1){
+        stars = '<i class="far fa-star"></i><i class="far fa-star"></i><i class="fas fa-star"></i>';
+    } else if(rating==2){
+        stars = '<i class="far fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
+    } else {
+        stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
+    }
+
+    stars = '<div class="stars" style="float:right;">'+ stars + '</div>';
 
     var close = '<a href="#" style="margin-top:-1em;color:black;padding:0 3px;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();"><i class="fas fa-times"></i></a><br>';
     var header = close;
     header = header + "<div style='background:linear-gradient(to right, " + mcolor + "," + mcolor + ");'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
     header = header + icon + cat + " - " + scat + "</h5></div>";
-    header = header + "<h4 style='padding-top: 0.4em;padding-left:0.3em; font-weight:normal;'>" + title + "</h4></div>";
-    header = header + "<hr class='style14'><div style='padding:0.5em;'>";
+    header = header + "<h4 style='padding-top: 0.4em;padding-left:0.3em; font-weight:normal;'>" + title + stars + "</h4></div>";
+    header = header + "<hr class='style14'><div style='padding:0.5em;clear:both;'>";
 
     var address = "Google Maps";
     var surl = "https://www.google.com/maps/search/" + title + "+aberdeen+uk";
 
     website = "<div id='streetview' style='height: 150px'></div>";
     website = website + "<hr class='style14' style='margin-top:2em;'><p style='margin-top:2em;' align='center'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website&nbsp;&nbsp;</a>";
-    website = website + "<a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbspFacebook&nbsp;&nbsp;</a>";
+    website = website + "<a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbsp;Facebook&nbsp;&nbsp;</a>";
     website = website + "<a target='_blank' href='" + surl + "'><i class='fas fa-map-marker'></i>&nbsp;"+ address + "</p></div>";
 
     marker.addListener('click', function () {
@@ -312,10 +323,7 @@ function setMarker(title, cat, scat, website, events, location, fb){
             } catch(error) {
                 console.log(error);
             }
-
-
         });
-
     });
 
     if(events.length <1) {marker.opacity=0.3;}
@@ -353,6 +361,7 @@ function fillMap(e){
        var cat = this.gsx$cat.$t;
        var scat = this.gsx$subcat.$t;
        var website = this.gsx$website.$t;
+       var rating = this.gsx$rating.$t;
 
        $(data).each(function(){
             if(this.name===title){
@@ -371,7 +380,7 @@ function fillMap(e){
                     }
                 });
 
-                setMarker(title, cat, scat, website, events, loc, fb);
+                setMarker(title, cat, scat, website, events, loc, fb,rating);
             }
        });
     });
@@ -594,7 +603,7 @@ Array.prototype.unique = function() {
     return this.filter(function (value, index, self) {
         return self.indexOf(value) === index;
     });
-}
+};
 
 function pinSymbol(color,size) {
     return {
@@ -705,7 +714,6 @@ function calExport(name, loc, begin, end) {
     cal.addEvent(name, "...", loc, begin, end);
     cal.download();
 }
-
 
 function clean(str) {
     return str.replace(/[^0-9a-z-A-Z ]/g, "").replace(/ +/, " ")
