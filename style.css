@@ -159,11 +159,12 @@ hr.style14 {
 
 
 #add, #rating {
-    width: 40%;
+    min-width: 40%;
+    max-width: 100%;
     position: absolute;
     padding: 2em;
     margin: 0;
-    top:0;
+    top: 5em;
     left: 0;
     z-index: 20;
     font-size: 10pt;
