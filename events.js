@@ -260,7 +260,7 @@ function setMarker(title, cat, scat, website, events, location, fb, rating){
         stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
     }
 
-    stars = '<div class="stars" style="float:right;" onclick="$(\'#add\').hide();$(\'#rating\').show();">'+ stars + '</div>';
+    stars = '<div class="stars" style="float:right;" onclick="$(\'#add\').hide();$(\'#rating\').show();$(\'#rating_name\').html('+title+');">'+ stars + '</div>';
 
     var close = '<a href="#" style="margin-top:-1em;color:black;padding:0 3px;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();"><i class="fas fa-times"></i></a><br>';
