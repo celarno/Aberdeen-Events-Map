@@ -188,6 +188,8 @@
             <div class="col-8">
                 <span id="rating_name"></span>
             </div>
+        </div>
+        <div class="form-group row">
             <label for="rating_score" class="control-label col-xs-4">Rating</label>
             <div class="col-xs-8">
                 <label class="radio-inline">
@@ -243,8 +245,8 @@
         $("#change_rating").submit(function(b) {
             b.preventDefault();
             if(gapi.auth2.getAuthInstance().isSignedIn.get()){
-                var name = $('#rating_name').val();
-                var rating = $('#rating_score').val();
+                var name = $('#rating_name').text();
+                var rating = $('input[name=rating_score]:checked', '#change_rating').val();
                 var mail = gapi.auth2.getAuthInstance().currentUser.get().w3.U3;
                 var timestamp = moment();
 
