@@ -468,6 +468,12 @@ $(document).ready(function () {
         $("#rating").css("height", h);
         $("#rating").css("width", "100%");
         $("#rating").css("margin", 0);
+    }else {
+        var h = ($(document).height() - $(".navi").height())/100;
+        h = h * 100;
+        $("#add").css("height", h);
+        $("#rating").css("height", h);
+
     }
 
 });
