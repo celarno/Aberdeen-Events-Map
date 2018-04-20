@@ -459,6 +459,17 @@ $(document).ready(function () {
 
     }).change();
 
+    var isMobile = window.matchMedia("only screen and (max-width: 768px)");
+    if (isMobile.matches) {
+        var h = $(document).height() - $(".navi").height();
+        $("#add").css("height", h);
+        $("#add").css("width", "100%");
+        $("#add").css("margin", 0);
+        $("#rating").css("height", h);
+        $("#rating").css("width", "100%");
+        $("#rating").css("margin", 0);
+    }
+
 });
 
 
