@@ -188,7 +188,7 @@
                         [$('#cat').val(),$('#subcat').val(),$('#location_name').val(),$('#website').val(),$('#facebook').val(),formula]
                     ]
                 };
-                addLocation();
+                addLocation(1);
                 alert("Categories successfully updated!");
                 $('#add_form').each(function(){
                     this.reset();
@@ -203,14 +203,15 @@
     });
 
 
-    function addLocation() {
+    function addLocation(sheet) {
+
         var params = {
             // The ID of the spreadsheet to update.
             spreadsheetId: '1laOX2_2aeSDz3H8lP7U8W_ohgeK39Ye1J3X-Q-_hsDU',
 
             // The A1 notation of a range to search for a logical table of data.
             // Values will be appended after the last row of the table.
-            range: 'A2:F2',
+            range: 'Sheet' + sheet +'!A2:F2',
 
             // How the input data should be interpreted.
             valueInputOption: 'USER_ENTERED',
@@ -257,7 +258,7 @@
     function updateSignInStatus(isSignedIn) {
         if (isSignedIn) {
             //makeApiCall();
-            console.log(GoogleAuth.currentUser.get());
+            console.log(gapi.auth2.getAuthInstance().currentUser.get().w3.U3);
             console.log("Signed in");
         }
     }
