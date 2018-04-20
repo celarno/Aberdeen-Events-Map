@@ -181,8 +181,8 @@ hr.style14 {
     max-width: 27% !important;
 }
 
-#change_rating table tr {
-    padding:0.5em;
+#change_rating td {
+    padding: 0.7em;
 }
 
 #rating {
