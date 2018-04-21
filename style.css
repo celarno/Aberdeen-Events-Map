@@ -162,7 +162,7 @@ hr.style14 {
     position: absolute;
     padding: 2em;
     margin: 0;
-    top: 4.5em;
+    top: 4.2em;
     left: 0;
     z-index: 20;
     font-size: 10pt;
@@ -192,8 +192,4 @@ hr.style14 {
 
 #change_rating td {
     padding: 0.7em;
-}
-
-#rating {
-    width: 30% !important;
 }
