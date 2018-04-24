@@ -119,7 +119,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 @supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
-    #info, .bg-light,.navbar, #add {
+    #info, .bg-light,.navbar, #add, #rating {
         background: rgba(255,255,255,0.6) !important;
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
@@ -127,7 +127,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 @supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
-    #info, .bg-light, .navbar,#add {
+    #info, .bg-light, .navbar, #add, #rating {
         background: rgba(255,255,255,0.9) !important;
     }
 }
@@ -157,12 +157,12 @@ hr.style14 {
     display: none !important;
 }
 
-#add {
-    width: 40%;
+
+#add, #rating {
     position: absolute;
     padding: 2em;
     margin: 0;
-    top: 5em;
+    top: 4.2em;
     left: 0;
     z-index: 20;
     font-size: 10pt;
@@ -175,7 +175,21 @@ hr.style14 {
     overflow: auto;
 }
 
+#add {
+    min-width: 40%;
+    max-width: 100%;
+}
+
+#rating {
+    min-width: 30%;
+    max-width: 100%;
+}
+
 .col-form-label {
     text-align: right;
     max-width: 27% !important;
+}
+
+#change_rating td {
+    padding: 0.7em;
 }

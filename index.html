@@ -122,7 +122,7 @@
 <div id="add">
     <a href="#" style="margin-top:-1em;color:black;padding:0 3px;text-decoration:none;float:right;" onclick="$('#add').hide();"><i class="fas fa-times"></i></a><br>
     <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
-    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
+    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button><BR><BR>
     <h4>Add Location</h4>
     <br>
     <form id="add_form">
@@ -150,7 +150,7 @@
             <label for="subcat" class="col-4 col-form-label">Subcategory</label>
             <div class="col-8">
                 <select id="subcat" name="subcat" class="custom-select" required="required">
-                    <option>TEST_SUBCAT</option>
+                    <option></option>
                 </select>
             </div>
         </div>
@@ -169,60 +169,138 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="offset-4 col-8">
+            <div class="offset-4 col-8" style="text-align: right;">
                 <button name="submit" type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </form>
 </div>
+
+<div id="rating">
+    <a href="#" style="margin-top:-1em;color:black;padding:0 3px;text-decoration:none;float:right;" onclick="$('#rating').hide();"><i class="fas fa-times"></i></a><br>
+    <button id="signin-button2" onclick="handleSignInClick()">Sign in</button>
+    <button id="signout-button2" onclick="handleSignOutClick()">Sign out</button><BR><BR>
+    <h4>Rate Location</h4>
+    <br>
+    <form id="change_rating" class="form-horizontal">
+        <table>
+        <tr>
+            <td><b>Location name</b></td><td><span id="rating_name"></span></td>
+        </tr>
+        <tr>
+            <td><b>Rating</b></td>
+            <td>
+                <label class="radio-inline">
+                    <input type="radio" name="rating_score" value="1">
+                    <i class="fas fa-star"></i>
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="rating_score" value="2">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="rating_score" value="3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="offset-4 col-8">
+                    <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+
 <script>
     var valueRangeBody;
     $(document).ready(function () {
+
         $("#add_form").submit(function (a) {
             a.preventDefault();
             if(gapi.auth2.getAuthInstance().isSignedIn.get()){
-                var formula = '';
+                var formula = '=IFERROR(IF(ISBLANK(INDIRECT("R[0]C[-1]", false)),"",getGeo(SUBSTITUTE(INDIRECT("R[0]C[-3]", false),"\'","")&", Aberdeen, UK")),"")';
+                var rating = '=IFERROR(AVERAGEIF(Sheet2!$A:$A,INDIRECT("R[0]C[-4]", false),Sheet2!$B:$B),0)';
                 valueRangeBody = {
                     "values": [
-                        [$('#location_name').val(),$('#cat').val(),$('#subcat').val(),$('#website').val(),$('#facebook').val(),formula]
+                        [$('#cat').val(),$('#subcat').val(),$('#location_name').val(),$('#website').val(),$('#facebook').val(),formula,rating]
                     ]
                 };
-                makeApiCall();
+                makeAPIcall(1);
+                alert("Categories successfully updated!");
+                $('#add_form').each(function(){
+                    this.reset();
+                });
+                $('#subcat').val("");
+                $('#add').toggle();
+
             } else {
                 alert("You need to sign in first.");
             }
         });
+
+        $("#change_rating").submit(function(b) {
+            b.preventDefault();
+            if(gapi.auth2.getAuthInstance().isSignedIn.get()){
+                var name = $('#rating_name').text();
+                var rating = $('input[name=rating_score]:checked', '#change_rating').val();
+                var mail = gapi.auth2.getAuthInstance().currentUser.get().w3.U3;
+                var timestamp = moment();
+
+                valueRangeBody = {
+                    "values": [
+                        [name,rating,mail,timestamp]
+                    ]
+                };
+                makeAPIcall(2);
+                alert("Rating successfully added!");
+                $('#change_rating').each(function(){
+                    this.reset();
+                });
+                $('#rating').toggle();
+
+            } else {
+                alert("You need to sign in first.");
+            }
+        });
+
     });
 
 
-    function makeApiCall() {
+    function makeAPIcall(sheet) {
+
         var params = {
             // The ID of the spreadsheet to update.
-            spreadsheetId: '1laOX2_2aeSDz3H8lP7U8W_ohgeK39Ye1J3X-Q-_hsDU',  // TODO: Update placeholder value.
+            spreadsheetId: '1laOX2_2aeSDz3H8lP7U8W_ohgeK39Ye1J3X-Q-_hsDU',
 
             // The A1 notation of a range to search for a logical table of data.
             // Values will be appended after the last row of the table.
-            range: 'A2:F2',  // TODO: Update placeholder value.
+            range: 'Sheet' + sheet +'!A2:F2',
 
             // How the input data should be interpreted.
-            valueInputOption: 'USER_ENTERED',  // TODO: Update placeholder value.
+            valueInputOption: 'USER_ENTERED',
 
             // How the input data should be inserted.
-            insertDataOption: 'INSERT_ROWS' // TODO: Update placeholder value.
+            insertDataOption: 'INSERT_ROWS'
         };
 
         var request = gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
         request.then(function(response) {
-            // TODO: Change code below to process the `response` object:
-            console.log(response.result);
+
+            console.log(response);
+            // console.log(response.result.tableRange);
         }, function(reason) {
             console.error('error: ' + reason.result.error.message);
         });
     }
 
     function initClient() {
-        var API_KEY = 'AIzaSyApTvTwhzrDL5KuyNJAukTGCkDE6hOudVI';  // TODO: Update placeholder with desired API key.
-        var CLIENT_ID = '182461052315-elq806k272bg9a09jhqanv8neujp0poj.apps.googleusercontent.com';  // TODO: Update placeholder with desired client ID.
+        var API_KEY = 'AIzaSyApTvTwhzrDL5KuyNJAukTGCkDE6hOudVI';
+        var CLIENT_ID = '182461052315-elq806k272bg9a09jhqanv8neujp0poj.apps.googleusercontent.com';
 
         // TODO: Authorize using one of the following scopes:
         //   'https://www.googleapis.com/auth/drive'
@@ -234,7 +312,7 @@
             'apiKey': API_KEY,
             'clientId': CLIENT_ID,
             'scope': SCOPE,
-            'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+            'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4']
         }).then(function() {
             gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
             updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
@@ -248,6 +326,7 @@
     function updateSignInStatus(isSignedIn) {
         if (isSignedIn) {
             //makeApiCall();
+            //console.log(gapi.auth2.getAuthInstance().currentUser.get().w3.U3);
             console.log("Signed in");
         }
     }

@@ -219,7 +219,7 @@ function initMap() {
     });
 }
 
-function setMarker(title, cat, scat, website, events, location, fb){
+function setMarker(title, cat, scat, website, events, location, fb, rating){
     var url = website;
     fb = "https://www.facebook.com" + fb.slice(0,-6);
 
@@ -249,31 +249,45 @@ function setMarker(title, cat, scat, website, events, location, fb){
         opacity: 1
     });
 
-    // streetview
+    var stars="";
+    if(rating==0){
+        stars = '<i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
+    } else if(rating==1){
+        stars = '<i class="far fa-star"></i><i class="far fa-star"></i><i class="fas fa-star"></i>';
+    } else if(rating==2){
+        stars = '<i class="far fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
+    } else {
+        stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
+    }
 
-    var img = "<div id=\"street-view\"></div>";
+    stars = '<div class="stars" style="float:right;" onclick="' +
+        '$(\'#add\').hide();' +
+        '$(\'#rating\').show();' +
+        '$(\'#rating_name\').html(\'' + title + '\');">'+ stars + '</div>';
+
 
     var close = '<a href="#" style="margin-top:-1em;color:black;padding:0 3px;' +
         'text-decoration:none;float:right;" onclick="$(\'#info\').hide();"><i class="fas fa-times"></i></a><br>';
     var header = close;
     header = header + "<div style='background:linear-gradient(to right, " + mcolor + "," + mcolor + ");'" + "><h5 style='font-weight:lighter;padding:0.5em;color:white;'>";
     header = header + icon + cat + " - " + scat + "</h5></div>";
-    header = header + "<h4 style='padding-top: 0.4em;padding-left:0.3em; font-weight:normal;'>" + title + "</h4></div>";
-    header = header + "<hr class='style14'><div style='padding:0.5em;'>";
+    header = header + "<h4 style='padding-top: 0.4em;padding-left:0.3em; font-weight:normal;'>" + title + stars + "</h4></div>";
+    header = header + "<hr class='style14'><div style='padding:0.5em;clear:both;'>";
 
     var address = "Google Maps";
     var surl = "https://www.google.com/maps/search/" + title + "+aberdeen+uk";
 
     website = "<div id='streetview' style='height: 150px'></div>";
     website = website + "<hr class='style14' style='margin-top:2em;'><p style='margin-top:2em;' align='center'><a target='_blank' href='" + url + "'><i class='fas fa-globe'></i>&nbsp;Website&nbsp;&nbsp;</a>";
-    website = website + "<a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbspFacebook&nbsp;&nbsp;</a>";
+    website = website + "<a target='_blank' href='"+ fb + "'><i class='fab fa-facebook-square'></i>&nbsp;Facebook&nbsp;&nbsp;</a>";
     website = website + "<a target='_blank' href='" + surl + "'><i class='fas fa-map-marker'></i>&nbsp;"+ address + "</p></div>";
 
     marker.addListener('click', function () {
 
         var e = [];
         $(events).each(function() {
-            var dt = "<div class='event_names'><i class=\"fas fa-caret-right\"></i> <font color='#565656'>" + moment(this.date).format("DD/MM/YYYY") + "</font><h6>"+this.n+"</h6></div>";
+            var event_link = "<a target='_blank' href='https://www.google.co.uk/search?q=" + this.n+"+" + title + "'>" + this.n + "</a>";
+            var dt = "<div class='event_names'><i class=\"fas fa-caret-right\"></i> <font color='#565656'>" + moment(this.date).format("DD/MM/YYYY") + "</font><h6>" + event_link + "</h6></div>";
             e.push(dt);
         });
         e = "<div> " + e.join('<br>') + "</div>";
@@ -314,10 +328,7 @@ function setMarker(title, cat, scat, website, events, location, fb){
             } catch(error) {
                 console.log(error);
             }
-
-
         });
-
     });
 
     if(events.length <1) {marker.opacity=0.3;}
@@ -355,6 +366,7 @@ function fillMap(e){
        var cat = this.gsx$cat.$t;
        var scat = this.gsx$subcat.$t;
        var website = this.gsx$website.$t;
+       var rating = this.gsx$rating.$t;
 
        $(data).each(function(){
             if(this.name===title){
@@ -373,7 +385,7 @@ function fillMap(e){
                     }
                 });
 
-                setMarker(title, cat, scat, website, events, loc, fb);
+                setMarker(title, cat, scat, website, events, loc, fb,rating);
             }
        });
     });
@@ -396,22 +408,30 @@ $(document).ready(function () {
         filterMap(id);
     });
 
-    $("a.nav-link.dropdown-toggle").click(function() {
-        var id = $(this).text();
-        $(this).css("font-weight", "bold");
-        filterMap(id);
+    $(".nav-link").click(function() {
+        $("#clear").show();
+        var id = $.trim($(this).text());
+        if($(this).find('div').attr("id") !== "reportrange"){
+            filterMap(id);
+        }
     });
 
     $(".dropdown-item").click(function() {
         var id = $(this).text();
+        $("#clear").show();
         $('.navbar-collapse').collapse('hide');
         filterMap(id);
     });
 
     $("#search_form").submit(function(e) {
         e.preventDefault();
-        mySearch();
+        $("#clear").show();
         $('.navbar-collapse').collapse('hide');
+        mySearch();
+    });
+
+    $("#clear").click(function () {
+        $(this).hide();
     });
 
     daterange();
@@ -445,6 +465,13 @@ $(document).ready(function () {
 
 function filterDates(start, end){
 
+    $(".nav-link").each(function () {
+        if($(this).css("font-weight") == 700){
+            var f1 = $.trim($(this).text());
+            filterMap(f1);
+        }
+    });
+
     for (var i = 0; i < markers.length; i++) {
         if(markers[i].events.length > 0 && checkFilter(i)){
             $(markers[i].events).each(function () {
@@ -462,17 +489,30 @@ function filterDates(start, end){
             markers[i].marker.setVisible(false);
         }
     }
+
+    var keyword = document.getElementById('search_box').value.toLowerCase();
+    if(keyword.length>0){
+        mySearch();
+    }
+
 }
 
 function filterMap(id) {
-    $("#clear").show();
+
     $("#info").hide();
-    $("a.nav-link.dropdown-toggle").css("font-weight", "normal");
+
+    $(".nav-link").each(function () {
+        if($.trim($(this).text())===id){
+            $(this).css("font-weight", "bold");
+        } else {
+            $(this).css("font-weight", "normal");
+        }
+    });
 
     if (id === "clear") {
         $('#search_box').val("");
         $("#clear").hide();
-        cb(moment(), moment());
+        cb(moment(), moment().endOf('month'));
     }
 
     for (var i = 0; i < markers.length; i++) {
@@ -481,8 +521,9 @@ function filterMap(id) {
         var cat = markers[i].category;
         var subcat = markers[i].subcategory;
 
-        if (cf === false && id === "clear") {
+        if (id === "clear") {
             markers[i].marker.setVisible(true);
+            continue;
         }
 
         if (( cat === id || subcat === id) && cf === true) {
@@ -494,7 +535,11 @@ function filterMap(id) {
             continue;
         }
 
-        if (( cat !== id || subcat !== id) && cf === true) {
+        if ( cat !== id && cf === true) {
+            markers[i].marker.setVisible(false);
+        }
+
+        if ( subcat !== id && cf === true) {
             markers[i].marker.setVisible(false);
         }
     }
@@ -521,26 +566,29 @@ function mySearch(){
     //$("a.nav-link.dropdown-toggle").css("font-weight", "normal");
 
     var keyword = document.getElementById('search_box').value.toLowerCase();
-    for (var i = 0; i < markers.length; i++) {
-        if(markers[i].events.length > 0 && checkFilter(i)){
-            $(markers[i].events).each(function(){
-                var test = this.n + markers[i].marker.title + this.desc;
-                test = strip(test).toLowerCase().replace(/[^\w\s]/gi, '').trim();
-                if(test.indexOf(keyword) !== -1){
-                    markers[i].marker.setVisible(true);
-                    return false;
+
+    if(keyword.length > 2){
+        for (var i = 0; i < markers.length; i++) {
+            if(markers[i].events.length > 0 && checkFilter(i)){
+                $(markers[i].events).each(function(){
+                    var test = this.n + markers[i].marker.title;
+                    test = strip(test).toLowerCase().replace(/[^\w\s]/gi, '').trim();
+                    if(test.indexOf(keyword) !== -1){
+                        markers[i].marker.setVisible(true);
+                        return false;
+                    } else {
+                        markers[i].marker.setVisible(false);
+                        return true;
+                    }
+                });
+            } else {
+                var test = markers[i].marker.title;
+                test = test.toLowerCase();
+                if (test.indexOf(keyword) !== -1) {
+                    continue;
                 } else {
                     markers[i].marker.setVisible(false);
-                    return true;
                 }
-            });
-        } else {
-            var test = markers[i].marker.title;
-            test = test.toLowerCase();
-            if (test.indexOf(keyword) !== -1) {
-                continue;
-            } else {
-                markers[i].marker.setVisible(false);
             }
         }
     }
@@ -560,7 +608,7 @@ Array.prototype.unique = function() {
     return this.filter(function (value, index, self) {
         return self.indexOf(value) === index;
     });
-}
+};
 
 function pinSymbol(color,size) {
     return {
@@ -580,7 +628,7 @@ function colorCat(a,color){
 
 function daterange(){
     var start = moment();
-    var end = moment();
+    var end = moment().endOf('month');
 
     $('#reportrange').daterangepicker({
         startDate: start,
@@ -621,7 +669,9 @@ function daterange(){
 function cb(start, end) {
     $('#reportrange').find('span').html(start.format('D/M') + ' - ' + end.format('D/M/YYYY'));
     $("#info").hide();
+    //alert(start+"-"+end);
     filterDates(start,end);
+
 }
 
 /*
@@ -670,29 +720,6 @@ function calExport(name, loc, begin, end) {
     cal.download();
 }
 
-
 function clean(str) {
     return str.replace(/[^0-9a-z-A-Z ]/g, "").replace(/ +/, " ")
-}
-
-
-function addLocation(){
-    var spreadsheetID = "1laOX2_2aeSDz3H8lP7U8W_ohgeK39Ye1J3X-Q-_hsDU";
-    var values = [
-        [
-            // Cell values ...
-        ]
-    ];
-    var body = {
-        values: values
-    };
-    gapi.client.sheets.spreadsheets.values.append({
-        spreadsheetId: spreadsheetID,
-        range: "A2:F2",
-        valueInputOption: "USER_ENTERED",
-        resource: body
-    }).then((response) => {
-        var result = response.result;
-        console.log('${result.updates.updatedCells} cells appended.')
-    });
 }
