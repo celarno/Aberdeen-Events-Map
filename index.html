@@ -250,10 +250,12 @@
                 var rating = $('input[name=rating_score]:checked', '#change_rating').val();
                 var mail = gapi.auth2.getAuthInstance().currentUser.get().w3.U3;
                 var timestamp = moment();
+                var weight = "=if(arrayformula(COUNTIF(A:A&C:C,INDIRECT(\"R[0]C[-4]\", false)&INDIRECT(\"R[0]C[-2]\", false)))>1,1/arrayformula(COUNTIF(A:A&C:C,INDIRECT(\"R[0]C[-4]\", false)&INDIRECT(\"R[0]C[-2]\", false))),1)";
+                var new_rating = "=INDIRECT(\"R[0]C[-4]\", false)*INDIRECT(\"R[0]C[-1]\", false)";
 
                 valueRangeBody = {
                     "values": [
-                        [name,rating,mail,timestamp]
+                        [name,rating,mail,timestamp,weight,new_rating]
                     ]
                 };
                 makeAPIcall(2);
