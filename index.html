@@ -251,7 +251,7 @@
                 var mail = gapi.auth2.getAuthInstance().currentUser.get().w3.U3;
                 var timestamp = moment();
                 var weight= "=1/arrayformula(COUNTIF(A:A&C:C,INDIRECT(\"R[0]C[-4]\", false)&INDIRECT(\"R[0]C[-2]\", false)))";
-                var new_rating = "=if(arrayformula(COUNTIF(A:A&C:C,INDIRECT(\"R[0]C[-5]\",false)&INDIRECT(\"R[0]C[-3]\",false)))>1,MAXIFS(B:B,A:A,INDIRECT(\"R[0]C[-5]\",false),C:C,INDIRECT(\"R[0]C[-3]\",false)),INDIRECT(\"R[0]C[-4]\",false))";
+                var new_rating = "=if(arrayformula(COUNTIF(A:A&C:C,INDIRECT(\"R[0]C[-5]\",false)&INDIRECT(\"R[0]C[-3]\",false)))>1,AVERAGEIFS(B:B,A:A,INDIRECT(\"R[0]C[-5]\",false),C:C,INDIRECT(\"R[0]C[-3]\",false)),INDIRECT(\"R[0]C[-4]\",false))";
 
                 valueRangeBody = {
                     "values": [
