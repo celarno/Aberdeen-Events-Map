@@ -503,7 +503,7 @@ function filterMap(id) {
 
     $(".nav-link").each(function () {
         if($.trim($(this).text())===id){
-            $(this).css("font-weight", "bold");
+            $(this).css("font-weight", 700);
         } else {
             $(this).css("font-weight", "normal");
         }
